@@ -1,0 +1,119 @@
+Introduction to Algorithms
+
+1 What is an algorithm?
+
+   An algorithm is a proceduring designed to acomplish a specific task.
+   To be interesting, the algorithm must solve a task that is well defined and constrained. The algorithm must be able to correctly process all 'instances' of the task that fit within the tasks specifications.
+   To be widely aplicable the task must be extremely general such that the algorithm can be adapted to many specific tasks that fit the same pattern.
+
+   Desirable properties for an algorithm are
+   - Correctness
+      all allowed outputs of the algorithm solve the problem correctly
+
+   - efficient
+      the algorithm must solve the problem in idealy the shortest timeframe possible. Algorithms are generally less useful the longer they take
+
+   - easy to implement
+      simplicity allows it to be widely applied.
+
+   It is rarely obvious whether an algorithm correctly solves a problem, it's obvious is not sufficient.
+
+
+1.1 Robot Tour Optimisation
+   
+   (soldering circuitboards puzzle)
+   an algorithm always does a correct job
+   a heuristic usually does a good job, but makes no guarentee
+   sometimes correct solutions (like exaustive search) are impractical due to the time to finish, and a hueristic may be more practical
+
+
+1.2 Selecting the right jobs
+   
+   (Picking to work on movies puzzle)
+   Seeking counter examples to break seemingly useful algorithms is important to find the optimal one
+
+
+1.3 Reasoning about Correctness
+   
+   the primary tool for distinguishing correctness is proofs
+   proofs consist of:
+   - clear precise statement of what you are trying to proove
+   - set of assumptions which are taken to be true
+   - chain of reasoning which takes you to the statement you are trying to proove
+
+   1.3.1 Expressing Algorithms
+
+      algorithms can be expressed in english, pseudo code or a real language.
+      the three are a trade off between clarity and precision.
+
+   1.3.2 Problems and Properties
+
+      problems must clearly define:
+      - Set of allowed inputs
+      - required properties of the output
+
+      if the problem is too broad/fuzzy, much harder to find a possible solution
+      narrow the set of allowable instances until there is a correct and efficient algorithm.
+
+   1.3.3 Demonstrating Incorrectness
+      
+      Best way to prove an algorithm is incorrect is by giving an input example where it fails
+      good counter-examples are:
+      - Verifiable (must know what the algorithm will output)
+      - Simplicity
+
+      Hunting for counter example tips:
+      - think small
+      - think exaustively (all 'groups' of possible inputs (none, one, many))
+      - go for a tie
+      - seek extremes
+   
+   1.3.4 Induction and Recursion
+      
+      Really they're the same thing
+      so many algorithms are recursive/incremental
+      usually right way to verify is inductive proof
+
+   1.3.5 Summations
+
+      consise expressions describing the addition of an arbitrarily large set of numbers
+
+      two basic classes of summation real popular in alg analysis are:
+      - Arithmetic progressions
+         the sum up to a certain number is quadratic (higher power)
+         1> exponential
+         1< converges to a constant
+
+      - Geometric series
+         index of the loop effects the exponant (power)
+         two vars, n (exponent) and a (base)
+         a<1 converges to constant
+         a>1 grows rapidly
+
+
+1.4 Modeling the Problem
+   
+   modeling is describing your real world problem in an abstract way, so that you can apply algorithms that already solve this abstract problem
+
+   1.4.1 Combinatorial Objects
+
+      you must formulate your problem in terms of computing structures like:
+      - Permutations
+         arragements or orderings of items
+      - Subsets
+         selections from a set of items, order doesn't matter
+      - Trees
+         hierarchical relationships between items.
+      - Graphs
+         relationships between arbitrary pairs of objects
+      - Points
+         locations in geometric space
+      - Polygons
+         regions in some geometric space
+      - Strings
+         sequences of characters or patterns
+
+   1.4.2 Recursive Objects
+      
+      Recursive objects are things made from smaller things of the same type
+      each of the abstract combinatorial objects can be thought of recursively

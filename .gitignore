@@ -1,3 +1,7 @@
+# binaries
+*.pdf
+zoom_lectures/
+
 # Prerequisites
 *.d
 

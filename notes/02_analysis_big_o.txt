@@ -1,0 +1,132 @@
+Algorithm Analysis and Big O
+
+Algorithms are incredibly important part of computer science because they can be studied in a language and machine independent way.
+Techniques are needed to compare the efficiency
+Assessing performance makes use of the 'big O' notation.
+
+2.1 The RAM model of Computation
+
+   In a simplified view of a computer, the RAM model assumes that each 'simple' operation (like adding two numbers or assigning a variable), takes one step.
+   Time is measured by counting up all the simple steps needed to complete an operation.
+   ignoring complexities like if a write goes to disk or cache doesn't matter because that level of detail doesn't matter for the purposes of large n algorithm analysis, missing the forest for the trees.
+
+   2.1.1 Best Worst and Average-Case Complexity
+
+      to understand how good or bad an algorithm is, how it works must be known over all instances of input that are valid.
+      Namely worst, best and average cases.
+      - Worst is the case that requires the most amount of steps to be taken
+      - Best is the least
+      - Average is well, the average amount of steps for all possible cases
+      
+      Worst case is most useful.
+      These time compexities define numerical functions.
+
+
+2.2 Big O Notation
+
+   the time complexities for best, worst and average if defined as precise functions are too difficult to work with as they require too much detail. For this detail you get little extra useful information other than 'time grows quadratically for n'.
+
+   easier to talk in terms of upper and lower bounds. meaning that for any point in the function it will never be higher/lower than this 'bounds'.
+
+   - upper
+      f(n) = O( g(n) ) meaning c*g(n) is an upper bound on f(n)
+      (the big O function brings g(n) down)
+
+   - lower
+      f(n) = omega( g(n) ) meaning c*g(n) is a lower bound on f(n)
+
+   - both
+      f(n) = theta( g(n) ) meaning (c1, c2) *g(n) is both a lower and upper bound on f(n)
+
+   don't care about constants as bound is multiplied with c
+
+
+2.3 Growth Rates and Dominance Relations
+
+   ignoring constants, big O still gives us an excellent idea if an algorithm is appropriate
+   you kind of just care where and how hard the function goes exponential/asymptotic
+   a diff of seconds rarely matters
+
+   2.3.1 Dominance Relations
+
+      when comparing functions, only the fastest growing term is considered.
+      we say that a faster growing function dominates a slower-growing one.
+      common function classes are:
+
+      - constants    f(n) = 1
+
+      - logarithmics f(n) = logn
+
+      - linear       f(n) = n
+
+      - superlinear  f(n) = n * lgn
+
+      - quadratic    f(n) = n^2
+
+      - cubic        f(n) = n^3
+
+      - exponential  f(n) = c^n     (for some c)
+
+      - factorial    f(n) = n!
+
+
+2.4 Working with the Big O
+
+   algebraic simplifications with big o
+
+   - addition
+      governed by the dominant term
+      O( f(n) )  +  O( g(n) )  =  O( max(f(n), g(n)))
+
+   - multiplication by constant
+      constants dont matter
+      O( c*f(n) )  =  O( f(n) )
+
+   - multiplication
+      need to combine as there will be new dominant term
+      O( f(n) ) * O( g(n) )  =  O( f(n) * g(n) )
+
+
+2.5 Reasoning About Efficiency
+   
+   reasoning about running time is usually easy given a precise description of the algorithm
+
+   reasoning about given examples usually considers writing expressions for how many times loops will repeat for the worst case senario.
+
+
+2.6 Logarithms and their Applications
+   
+   A logarithm is simply an inverse exponential function
+   Logarithms arise in processes where things are repeatedly halved.
+
+   2.6.1 Logarithms and Binary Search
+
+      binary search is flicking to the middle of a sorted list to compare the val. If comparatively bigger then search the second half recursively, if not, search the first.
+      mega efficient, 20 comparisons are enough to search a million long list.
+
+   2.6.2 Logarithms and Trees
+
+      similar to the binary search example, a tree that successively splits into leaves is logarithmic.
+
+      and many more... but they dont feel relevant and im tired af
+
+
+2.7 Properties of Logarithms
+
+   base of logarithms are important for math reasons, however for the purpose of big O, they can be considered a constant
+
+   - base b = 2
+      binary logarithm (wrote lg) involves repeated halving
+
+   - base b = e
+      all natty log (wrote ln)
+      quick side note e is the irrational constant derived from the infinite series 1/n!
+      known as Euler's constant?
+
+   - base b = 10
+      common npc logarithm
+      historically used in log tables for multiplication before calculators
+
+2.8 War Story: Mystery of the Pyramids summary
+
+   an improved algorithm is vastly better than upgrading computer power (even to supercomputer levels)

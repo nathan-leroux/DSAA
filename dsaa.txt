@@ -1,0 +1,197 @@
+______  _____  ___    ___  
+|  _  \/  ___|/ _ \  / _ \ 
+| | | |\ `--./ /_\ \/ /_\ \
+| | | | `--. \  _  ||  _  |
+| |/ / /\__/ / | | || | | |
+|___/  \____/\_| |_/\_| |_/
+                           
+     Data Structures and Algorithms                      
+
+
+## Week 1
+
+    Daily q:    -
+    Lecture:    Intro to alg
+    Read Text:  pg27
+    Notes
+
+    Daily q:    1-5
+    Lecture:    Asymptotic notation
+    Read Text:  pg40
+    Notes
+
+
+## Week 2
+
+    Daily q:    2-29
+    Lecture:    Logarithms
+    Read Text:  pg58
+    Notes
+
+    Daily q:    2-27 
+    Lecture:    Basic Data structures 
+    Read Text:  pg75
+    Notes
+
+
+## Week 3
+
+    Daily q:    in daily q pdf
+    Lecture:    Dictionary data structures  
+    Read Text:  pg92
+    Notes
+
+    Daily q:    in daily q pdf
+    Lecture:    Hashing
+    Read Text:  pg102
+    Notes
+
+
+## Week 4
+
+    Daily q:    4-3
+    Lecture:    Applications of sorting
+    Read Text:  pg114
+    Notes
+
+    Daily q:    in daily q pdf
+    Lecture:    heapsort/ priority Queues
+    Read Text:  pg126
+    Notes
+
+    Homework 1 due
+
+
+## Week 5
+
+    Daily q:    in daily 
+    Lecture:    Mergesort/ Quicksort/ Binsort 
+
+
+    Read Text:  pg151 
+    Notes
+###########################  PROGRESS MARKER  ###########################
+
+    Midterm
+
+
+## Portfolio catchup
+    upload and properly label notes
+    write example containers in c
+    write example sorting algorithms in c
+
+
+## Week 6
+
+    Daily q:    -
+    Lecture:    Data Structures for graphs
+    Read Text:  pg211
+    Notes
+
+    Daily g:    7-9
+    Lecture:    Breadth-first search
+    Read Text:  pg212
+    Notes
+
+    Homework 2 due
+
+## Week 7
+
+    Daily g:    7-4
+    Lecture:    Topological sort/ connectivity
+    Read Text:  pg234
+    Notes
+
+    Daily g:    7-28
+    Lecture:    Minimum spanning trees
+    Read Text:  pg256
+    Notes
+
+
+## Week 8
+
+    (winter break)
+
+    Daily g:    8-7
+    Lecture:    Shortest paths
+    Read Text:  pg266
+    Notes
+
+
+## Week 9
+
+    Daily g:    8-16
+    Lecture:    Exploiting graph algorithms
+    Read Text:  pg275
+    Notes
+
+    Daily g:    8-26
+    Lecture:    Combinatorial search
+    Read Text:  pg288
+    Notes
+
+    Homework 3 Due
+
+
+## Week 10
+
+    Daily g:    9-1
+    Lecture:    Program optimization
+    Read Text:  pg302
+    Notes
+
+    Daily g:    9-2
+    Lecture:    Elements of dynamic programming
+    Read Text:  pg325
+    Notes
+
+
+## Week 11
+
+    Daily g:    10-7
+    Lecture:    Examples of dynamic programming
+    Read Text:  pg336
+    Notes
+
+    Daily g:    10-23
+    Lecture:    Limitations of dunamic programming
+    Read Text:  pg344
+    Notes
+
+    Homework 4 Due
+
+
+## Week 12
+
+    Midterm 2
+
+    Daily g:    -
+    Lecture:    Reductions
+    Read Text:  pg360
+    Notes
+
+
+## Week 13
+
+    Daily g:    11-6
+    Lecture:    Easy Reductions
+    Read Text:  pg368
+    Notes
+
+    Thanksgiving
+
+
+## Week 14
+
+    Daily g:    11-6
+    Lecture:    Harder Reductions
+    Read Text:  pg372
+    Notes
+
+    Daily g:    11-22
+    Lecture:    NP-completeness challenge
+    Read Text:  pg382
+    Notes
+
+    Homework 5 due
+

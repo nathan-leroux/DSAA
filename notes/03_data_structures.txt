@@ -1,0 +1,193 @@
+Data Structures
+
+   The right way of implementing a data structure has a great effect on the speed of an algorithm
+   replacing the underlying implementation doesn't change correctness, but gives a performance trade off.
+   It is more important to really understand the basics than to be exposed to fancy stuff in this topic
+
+3.1 Contiguous vs Linked Data Structures
+
+   Data structures can be classified as either contiguous or linked, depending on whether they are implemented by arrays (contiguous) or pointers (linked).
+   Contiguously allocated structures are composed of single slabs of memory like arrays or matrices.
+   Linked data structures are composed of distinct chunks of memory like lists, trees and graphs.
+
+   3.1.1 Arrays
+
+      the fundamental contiuously allocated structure.
+      each element can be located by its index.
+      Benefits of arrays include:
+      - Constant-time for member access (given we know the index)
+      - Space efficiency (no wasted space on links)
+      - Memory locality (having all info right next to each other on disk/memory helps with read speed)
+
+      adjusting size arrays can be done with 'dynamic arrays'.
+      These arrays double when needing to add element to full array, on average every element is copied less than 2 times, meaning that they expand in O(n) time.
+
+   3.1.2 Pointers and Linked Structures
+
+      Pointers are the connections that hold the pieces of linked structures together.
+      
+      Each node of the data structure has one or more pointers that hold the location of other nodes.
+
+      Looking up must be done by going through all the links, no index lookup.
+      Insertion and deletion requires access to the previous and next datastructures address, doubly linked lists are handy for this case.
+
+   3.1.3 Comparison
+      
+      advantages for linked structures are:
+      - no overflow on linked structures
+      - simple insertion and deletion
+      - easier to move large records (small pointers v full ds)
+
+      Advantages for contiguous structures are:
+      - space efficient
+      - efficient random access to items
+      - better memory locality and cache performance.
+
+
+3.2 Containers: Stacks and Queues
+
+      'Container' means an abstact data type that stores and retrieves without caring about the content (.pop() doesn't care what is returned). Compaired to dictionaries which do care.
+
+      Distinguished by the retrieval order they support, queues are First In First Out (FIFO) and stacks are Last In First Out (LIFO).
+
+      Stacks are simple and efficient, right choice when order doesn't matter, they use .push(x) and .pop()
+
+      Queues are most appropriate for applications where the order is important. Trickier to implement than stacks, use methods .enqueue(x) and dequeue()
+      
+      both can be implemented with arrays or linked lists
+
+
+3.3 Dictionaries
+
+   Dictionary's are a datastructure that permits access to data items by content.
+   the content is retrieved later with the associated key
+
+   Primary operations are:
+      Search(D, k)
+         given a key return a pointer to the associated element, if it exists
+
+      Insert(D, x)
+         Given a key and value, add to dictionary
+
+      Delete(D, x)
+         Given a pointer to an item, remove from dictionary
+
+   Other operations are:
+      Min(D), Max(D)
+         Return a pointer to the item with the largest or smallest key 
+
+      Predeccessor(D, x) Successor(D, x)
+         return a pointer whose key is immediately before or after item x in sorted order
+
+   Particularly useful abstraction. By defining complex problems in terms of dictionary operations, can focus on the problem instead of the implementation
+
+   Depending on the underlying implementation (array, linked list, binary tree) there are performance tradeoffs for each and should be considered based on case
+
+
+3.4 Binary Trees
+
+   Binary trees allow both fast search and fast update methods for dictionaries
+   essentially a linked list with two pointers
+   Each node in the tree has a single key, all nodes in the left subtree have keys less than the current node, all nodes in the right subtree are greater than
+   There is exactly one labeling for any set of keys that makes it a binary search tree.
+
+   3.4.1 Implementing Binary Search Trees
+
+      Implementing tree nodes is done with a left, right, parent pointers and a data field
+      basic operations are searching, traversal, insertion and deletion.
+
+      Searching
+         recursively by compairing key to the present node, if less than search left pointer, if right search right pointer
+
+      Finding Min and Max elements
+         by definition, smallest key is the leftmost node in the tree
+         Similarly, largest is the rightmost
+
+      Traversal
+         Visiting all the nodes in order is done by definition visiting all nodes left of the root node, then returning the current node, then visiting all nodes to the right.
+         recursively this returns all keys in comparison order.
+         Result can be inverted by searching the rightmost nodes first instead of left.
+
+      Insertion
+         Exactly one place to insert item while being able to find it again
+         Navigate comparisons until the first NULL pointer is found. assign to pointer
+
+      Deletion
+         Tricky due to having to link the two possible descendant subtrees back into the structure.
+         Deleting a node with no subtrees is simple, just remove the pointer
+         Deleting a node with one subtree can be done by linking the orphaned subtree into the deleted nodes place.
+
+         Deleting a node with two subtrees is slightly more difficult. The node to be deleted is replaced by the leftmost node of the right subtree, making the binary tree labels correct.
+
+   3.4.2 How Good are Binary Search Trees?
+
+      when a dictionary is implemented with a binary search tree, all three dictionary operations take O(h) time, where h is the height of the tree, this makes the order that items are sorted into the tree important.
+
+      Depending if items are inserted randomly vs sorted order means that the tree can have a height of lg(n) to n, on average trees can be expected to be closer to lg(n)
+
+
+   3.4.3 Balanced Search Trees
+      
+      Random search trees are usually good, but get unlucky with the order of insertion and the tree will end up having a heigth of n.
+
+      Balanced search trees are datastructures that modify the tree a little further with each insertion operation to ensure that the tree has a height of lg(n). Examples include red-black trees and splay trees.
+
+
+3.5 Priority Queues
+   
+   The priority queue allows ordering of data based on order of importance, providing more flexibility than simple sorting. Allows new elements to enter at arbitrary intervals.
+   Supports three primary operations:
+      Insert()
+      Find-Minimum()
+      Delete-Minimum()
+
+   Minimum can also be Maximum or some other implementation
+
+   can be implemented with arrays (sorted/unsorted) or trees.
+   All implementations can be implemented with find_minimum() being constant time.
+   The trick is to keep an extra variable as a pointer to the current minimum, can be updated by comparing it against new items being inserted/when the minimum is deleted.
+
+
+3.5 Hashing
+   
+   A hash function is a mathematical function that maps keys to integers, which is then used to determine where an entry should be placed on an array. The entry can then be looked up by hashing the key again to see if it exists in the array.
+
+   3.7.1 Collision Resolution
+
+      A collision occours when two or more keys map to the same index when passed through the hash function.
+      There are two different ways to achieve this:
+
+      Chaining is when collisions are resolved by storing linked lists at each index. When there is a collision, the entry can be found by iterating through the linked list. Typically with a good hashing function and properly sized array, the size of the linked lists will be minimal.
+      Does take a lot of space with pointers though, which could just be used to increase the size of the table.
+
+      Open addressing instead causes the entry to be stored at the next available position on the array. Provided the array is not very full, the next available space should not be far away. Searching for a key is now done by going to the expected index, then incrementing until it is found. Deletion becomes ugly as removing one item might make others unaccessable, typically requires the full table to be reinserted again.
+
+   3.7.2 Duplicate Detection via Hashing
+
+      The key idea of hashing is to represent a large object by a single number, has use in other clever applications such as checking for duplicate files or parts of text. Also can be used in security for authenticating files as un-altered. A hash is given for what data should represent, when the actual data is received it can be hashed with the same function to check for modifications.
+
+   3.7.2 Canonicalization
+
+      Canonicalization is reducing complicated objects to a standard format, once they are in a standard format, hashing becomes easier as it reduces the amount of possible indexes, in this case searching for collisions gives you similar objects (which is what you want in this case)
+
+   3.7.5 Compaction
+
+      Consider sorting all books in a library by contents, this makes comparison expensive as each full book would need to be compared in full to every other one.
+      A better idea would be to compare the start (compaction), when just the start is hashed collisions can be explicitly compared to find true comparison, which is much faster. this is also called fingerprinting.
+
+
+3.8 Specialized Data Structures
+   
+   Data structures also exist for more specialized objects than just unstructured sets. for example:
+      String data structures
+         typically arrays of characters with a delimiter
+      Geometric data structures
+         typically a collection of data points and regions
+      Graph data structures
+         represented using either adjacency matrices or lists.
+      Set data structures
+         subsets of items are typically represented using a dictionary to support membership queries, or bit vectors.
+
+      The design principals are the same, a small set of basic operations to be performed efficiently
+   
+

@@ -1,0 +1,170 @@
+Sorting
+
+  Sorting is the basic building block that many algorithms are built on top of, it is also the most thoroughly researched problem in computer science.
+
+
+4.1 Applications of Sorting
+
+   there exists sorting algorithms that are able to complete in a time complexity of superlinear time, compared with based quadratic operations.
+   Sorting makes many operations significantly quicker as data in sorted order is predictable as to where it is placed.
+
+   Hash vs Sorting?
+
+   Hashing allows the retrieval of an entry in constant time, making it better than sorting (log time)
+   however hashing comes short when entries need to be compared in context to other entries.
+
+   In general, prefer sorting when operations comparing entries to others are needed, such as median and closest pair. Prefer hashing when items can be considered in isolation, such as mode and general searching.
+
+
+4.2 Pragmatics of Sorting
+
+  When considering sorting algorithms, a good questions is how do we consider our elements to be 'sorted'?
+  Common things to consider are:
+    Increasing or decreasing order?
+    Sorting just the key or the entire record?
+      for any complex record, it is necessary to specify what the key field is
+    Handling equal keys?
+      Sorting algorithms that leave items with the same key in the same relative order 
+      a backup method for comparison is needed for keys that are the same to maintain stability
+      usually the initial position is used as a secondary key
+    Non-numerical data?
+      how to handle punctuation, weird characters
+
+  The solution to this is an aplication specific pairwise function, by providing a function that defines what 'sorted' is, the details of how to actually sort can be focussed on.
+
+
+4.3 Heapsort: Fast Sorting via Data Structures
+
+  Selection sort, one of the most trivial to code sorting algorithms searches through an array, finds the minimum item and places it in a sorted array for quadratic time.
+
+  These Find-Minimum() and Delete() operations are exactly what a priority-queue does, except with logn time for searching.
+
+  What Heapsort actually is, is just selection sort but using a more efficient datastructure.
+
+
+  4.3.1 Heaps
+
+    A Heap is a binary tree defined such that the key of each node 'dominates' its children.
+    however, unlike binary trees, of which lots of space is taken up by pointers, a heap is an array which implicitly represents a binary tree through its indexes
+
+    What is nice about this representation is that children and parents can be determined by performing arithmetic on the index:
+      Left child is - 2k
+      Right child is - 2k + 1
+      Parent is - k/2
+
+    What if not all nodes have 2 children? wouldn't there be gaps?
+      
+      To avoid wasting space heaps don't allow holes in the tree, and can do so in an efficient way
+      However, it makes operations such as searching, moving and arbitrary search trees tricky.
+      This makes them a poor choice for binary search trees, but great for priority queues.
+
+
+  4.3.2 Constructing Heaps
+
+    Can be constructed incrementally, with each new element being placed at the leftmost place in the heap.
+    However, this doesn't satisfy the condition that each node will dominate its children.
+
+    To ensure this is met, a new element is checked against its parent, if it needs to be switched both the parent and other childs condition will still be satisfied, but the new parent might still dominate its parent. therfore this  needs to be a recursive call as the new value is 'bubbled up'.
+    Worse case time complexity for this is logarithmic.
+
+
+  4.3.3 Extracting the Minimum
+
+    Finding the minimum is easy as it will be the most dominant position on the heap (index 1)
+    However, after extracting the minimum, the heap is left with a hole at the top.
+
+    To resolve this hole, a 'heapify' is performed, (this is also the same method to merge two heaps, because really a heap with no head is two sub-heaps (the children)).
+
+    The rightmost item (last) is moved to the head, then compared to its children which likely dominate it.
+    The new head is then switched with lightest child (if it is still dominated).
+    The function is recursively called, propgating this element to the bottom of the heap while maintaining the relationship with all the nodes.
+    heapify() can be completed in logarithmic time (where log(n) is the height of the tree)
+
+    Heapsort is
+      making a heap (n*logn)
+      repeatedly taking the minimum (n*logn)
+      calling heapify to maintain order (logn)
+
+    which is an efficient sort
+
+
+  4.3.4 Faster Heap Construction
+
+    Considering an array of items to be sorted, the last n/2 items are actually already sorted mini-heaps (as they are all leaves), combined with our heapify() operation for merging two heaps.
+
+    while this is still superlinear time to complete, most of the heapify operations are minimal as the heaps are size 1.
+
+
+  4.3.5 Sorting by Incremental Insertion
+
+    Insertion sort is selecting the next element in an unsorted set and inserting it into a new sorted set.
+    while its still quadratic time, its performance is pretty good if the unsorted set is 'almost' sorted.
+    faster sorting algorithms based on incremental insertion use more efficient data structures.
+
+
+4.5 Mergesort: Sorting by Divide and Conquer
+  
+  The recursive approach to sorting involves breaking down the list to be sorted into two smaller lists.
+  The base case of this occurs when the list only has one item in it, which is a sorted list.
+  The efficiency that mergesort gets comes from how fast the split lists can be stitched back together.
+  If they can be stitched together faster that the time taken to sort the divided lists, the algorithm will be efficient.
+
+  Mergesort is breaking down these lists into halves (which can be done logn times).
+  To combine the list back together once they are indivisible (single element), a 'merge' is completed.
+  Since the two lists being merged are already internally sorted, the next element must exist at the first position of one of the lists.
+  Pointers are incremented through each list until the end of both is completed and the 'merge' is finished.
+  This means that every comparison results in at least one element sorted ( O(n) ).
+  Because the recursion goes logn levels deep, and n work is done at each level.
+  Mergesort takes O(nlogn) time.
+
+  Mergesort is a great choice for sorting linked lists as it does not require picking random list positions such as quicksort and heapsort.
+  Mergesort does require extra memory to create a buffer for each merge operation as to not overwrite the lists being compared.
+
+
+4.6 Quicksort: Sorting by Randomization
+  
+  Quicksort, like its name suggests is another fast recursive sorting algorithm.
+  How it works is by selecting one element from the list to be sorted, this is called the pivot.
+  The rest of the elements in the list are then compared to this pivot.
+  If they are less than the pivot they are placed at the start of the array and if they are larger at the end. There is then one position left to place the pivot.
+  What this means is that the pivot is now exactly in the right place, also none of the items to the left or right of the pivot will have to cross over.
+  This means that the two 'partitions' can now be sorted independently by performing recursive partitions.
+
+  Similar to mergesort except we are now partitioning instead of merging, the partition step considers each element in the list once for n, the list can be partitioned by splitting it in half logn times.
+  For a total worst case time of O( nlogn ) (*with high likely hood)
+
+  A problem arises depending on where the pivot element sits in the final list.
+  If the pivot sits in the exact middle of the list, the algorithm will be efficient.
+  However if the pivot sits at the extremes like the first or last element, effectively no partition will happen and sorting will take O( n^2 ) time, similar to selection sort.
+
+  4.6.1 Intuition: The Expected Case for Quicksort
+    
+    How likely is it that a randomly selected pivot is going to provide a 'good' partition?
+    Considering the central 50% of possible pivots, you would expect that on average the average partition selected at random to split a list into 1/4 and 3/4 chunks.
+    Even with not perfect partitioning, this only roughly makes the tree 1.3 times taller.
+    The odds of always picking among the largest and smallest elements are actually incredibly small.
+
+  4.6.2 Randomized Algorithms
+
+    for any deterministic (consistent) method for picking the pivot, there will exist a worst case input that will cause the sort to run in quadratic time.
+    By selecting the pivot at random you can guarantee with high probability that the sort will have a worst case of O( nlogn ).
+
+    Randomization is very handy to improve algorithms that have good average case complexity but suffer worse performance for specific inputs.
+    Examples of where this is used include random sampling, hashing (using different hash functions) and searching.
+
+  4.6.3 Is Quicksort Really Quick?
+
+    While it may appear that other sorts like mergesort perform faster due to even recursive splits, quicksort tends to be faster in practice due to simpler inner loop code.
+
+
+4.7 Distribution Sort: Sorting via Bucketing
+
+  Further than halving a list needing to be sorted, bucketing involves breaking down the list into subgroups (like by first letter in string list).
+  Doing so can be repeated (like for each successive letter) until each bucket only contains a single element.
+  Bucketing also known as distribution sort is very effective when the data provided is uniformly distributed.
+  If its not though, it really inefficient.
+
+  4.7.1 Lower Bounds for Sorting
+
+    Sorting in linear time is not possible as each element would have to be sorted correctly with one comparison.
+    A way to show this is that if an algorithm did not behave any differently for all permutations of n!, then it is not possible that all lists would be output correctly sorted.
