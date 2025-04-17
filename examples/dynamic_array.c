@@ -112,8 +112,3 @@ void example_dynarray(void) {
         dynarray_print(example_array);
     }
 }
-
-
-int main(void) {
-    example_dynarray();
-}
