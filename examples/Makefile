@@ -1,6 +1,6 @@
 cc:= clang
 flags:= -std=c17 -ggdb -Werror -Wall -pedantic
-objects:= dynamic_array.o linked_list.o main.o
+objects:= dynamic_array.o linked_list.o stack.o main.o
 binary:= examples
 
 run: $(binary)
