@@ -33,6 +33,11 @@ void list_print(struct linked_list* list) {
 }
 
 
+struct linked_list* list_init(void) {
+    return NULL;
+}
+
+
 struct linked_list* list_create(void) {
     struct linked_list* new_list = malloc(sizeof(struct linked_list));
 
@@ -95,7 +100,7 @@ struct linked_list* list_tail(struct linked_list* list) {
 
 void example_linked_list(void) {
     // ensure i would be able to make a stack and a queue with this
-    struct linked_list* list = list_create();
+    struct linked_list* list = list_init();
     char* string = "linked list";
 
     printf("## Linked List example\n");
@@ -103,10 +108,7 @@ void example_linked_list(void) {
     printf("## appending to array  (added to head so input is reversed)\n");
     printf("##\n");
 
-    list->value = string[0];
-    list_print(list);
-
-    for (int i=1; i<strlen(string); ++i) {
+    for (int i=0; i<strlen(string); ++i) {
         list_append(&list, string[i]);
         list_print(list);
     }

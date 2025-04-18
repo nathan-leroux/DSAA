@@ -7,6 +7,8 @@ struct linked_list {
     struct linked_list* next;
 };
 
+
+struct linked_list* list_init(void);
 struct linked_list* list_create(void);
 void list_print(struct linked_list*);
 char list_pop(struct linked_list**, struct linked_list*);

@@ -9,7 +9,7 @@
  * Stack example
  *
  * Implemented with dynamic array
- * First In, First Out (FIFO)
+ * Last In, First Out (LIFO)
  *
  * stack_init   - O(1)
  * push         - O(1)
