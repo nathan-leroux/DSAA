@@ -2,6 +2,7 @@
 #include "linked_list.h"
 #include "stack.h"
 #include "queue.h"
+#include "dictionary.h"
 
 int main(void) {
     example_dynarray();
@@ -11,6 +12,7 @@ int main(void) {
     example_stack();
     printf("\n\n");
     example_queue();
-    
+    printf("\n\n");
+    example_dictionary();
     return 0;
 }

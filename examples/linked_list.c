@@ -5,7 +5,7 @@
 #include "linked_list.h"
 
 /*
- * Linked List 
+ * Linked List example
  * 
  * list_print   - helper function
  * list_create  - O(1)

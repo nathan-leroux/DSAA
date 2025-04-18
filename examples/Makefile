@@ -1,13 +1,14 @@
 cc:= clang
 flags:= -std=c17 -ggdb -Werror -Wall -pedantic
-objects:= dynamic_array.o linked_list.o stack.o queue.o main.o
+linker:= -lm
+objects:= dynamic_array.o linked_list.o stack.o queue.o dictionary.o main.o
 binary:= examples
 
 run: $(binary)
 	./$(binary)
 
 $(binary): $(objects) 
-	$(cc) $(flags) $^ -o $(binary)
+	$(cc) $(linker) $(flags) $^ -o $(binary)
 
 $(objects): %.o: %.c
 	$(cc) $(flags) -c $^ -o $@
