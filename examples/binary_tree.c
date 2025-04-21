@@ -77,12 +77,12 @@ struct tree* tree_search(struct tree* btree, int target) {
 }
 
 
-void tree_delete(struct tree* selected) {
+void tree_delete(struct tree** tree, struct tree* selected) {
     // find the pointer that links to the parent
     struct tree** parent_ref;
 
     if (selected->parent == NULL) {
-        parent_ref = &selected;
+        parent_ref = tree;
     }
     else if (selected->parent->left == selected) {
         parent_ref = &(selected->parent->left);
@@ -107,9 +107,11 @@ void tree_delete(struct tree* selected) {
     else if (children == 1) {
         if (selected->left != NULL) {
             *parent_ref = selected->left;
+            selected->left->parent = selected->parent;
         }
         else {
             *parent_ref = selected->right;
+            selected->right->parent = selected->parent;
         }
     }
     else {
@@ -119,7 +121,7 @@ void tree_delete(struct tree* selected) {
         minimum->value = selected->value;
         selected->value = value_switch;
 
-        tree_delete(minimum);
+        tree_delete(tree, minimum);
     }
 }
 
@@ -152,6 +154,7 @@ void tree_insert(struct tree** selected, struct tree* parent, int value) {
 
 void example_binary_tree(void) {
     struct tree* btree = NULL;
+    struct tree* selected;
 
     printf("## Binary Tree example\n");
     printf("##\n");
@@ -170,7 +173,8 @@ void example_binary_tree(void) {
     printf("## Deleting element 2\n");
     printf("##\n");
 
-    tree_delete(tree_search(btree, 2));
+    selected = tree_search(btree, 2);
+    tree_delete(&btree, selected);
 
     tree_print(btree);
 

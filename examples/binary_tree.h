@@ -12,7 +12,7 @@ struct tree {
 void tree_print(struct tree*);
 struct tree* tree_minimum(struct tree*);
 struct tree* tree_search(struct tree*, int);
-void tree_delete(struct tree*);
+void tree_delete(struct tree**, struct tree*);
 void tree_insert(struct tree**, struct tree*, int);
 void example_binary_tree(void);
 
