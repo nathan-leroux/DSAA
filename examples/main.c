@@ -5,6 +5,7 @@
 #include "dictionary.h"
 #include "binary_tree.h"
 #include "priority_queue.h"
+#include "sorting.h"
 
 
 int main(void) {
@@ -21,5 +22,7 @@ int main(void) {
     example_binary_tree();
     printf("\n\n");
     example_priority_queue();
+    printf("\n\n");
+    example_sorting();
     return 0;
 }

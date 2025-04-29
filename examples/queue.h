@@ -9,6 +9,7 @@ typedef struct {
     struct linked_list* end;
 } Queue;
 
+void queue_print(Queue*);
 Queue* queue_init(void);
 void enqueue(Queue*, char);
 char dequeue(Queue*);

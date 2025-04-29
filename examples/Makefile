@@ -1,7 +1,7 @@
 cc:= clang
 flags:= -std=c17 -ggdb -Werror -Wall -pedantic
 linker:= -lm
-objects:= dynamic_array.o linked_list.o stack.o queue.o dictionary.o binary_tree.o priority_queue.o main.o
+objects:= dynamic_array.o linked_list.o stack.o queue.o dictionary.o sorting.o binary_tree.o priority_queue.o main.o
 binary:= examples
 
 run: $(binary)

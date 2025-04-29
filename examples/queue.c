@@ -18,6 +18,11 @@
  *
 */
 
+void queue_print(Queue* queue) {
+    list_print(queue->start);
+}
+
+
 Queue* queue_init(void) {
     Queue* new_queue = malloc(sizeof(Queue));
 
@@ -40,7 +45,6 @@ void enqueue(Queue* queue, char input) {
 
 char dequeue(Queue* queue) {
     if (queue->start == NULL) {
-        printf("queue is empty, unable to dequeue value\n");
         return 0;
     }
 
@@ -65,6 +69,9 @@ void example_queue(void) {
         enqueue(queue, string[i]);
     }
 
+    printf("print queue: ");
+    queue_print(queue);
+
     printf("##\n");
     printf("## dequeue values\n");
     printf("##\n");
@@ -72,4 +79,7 @@ void example_queue(void) {
     for (int i=0; i<strlen(string); ++i) {
         printf("dequeue: %c\n", dequeue(queue));
     }
+
+    printf("##\n");
+    printf("## null deque: %d\n", dequeue(queue) == 0);
 }
