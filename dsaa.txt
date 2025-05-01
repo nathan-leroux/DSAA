@@ -76,39 +76,13 @@ ______  _____  ___    ___
 
 ## Portfolio catchup
     upload and properly label notes
-###########################  PROGRESS MARKER  ###########################
-        data structures
-            dynamic array operations
-            linked list operations
-            double linked list operations
-            binary tree operations
-            hashtable operations
-
-            dynamic array, stack
-            linked list, stack
-            dynamic array, queue
-            linked list, queue
-            sorted dynamic array, dictionary
-            hashtable, dictionary
-
-            linked list priority queue
-            binary search tree
-    
-        sorting
-            n^2 sorts
-            selection sort
-            insertion sort
-
-            nlogn sorts
-            heapsort
-            mergesort
-            quicksort
-    write example containers in c
+    data structures
+    sorting
         
-    write example sorting algorithms in c
-
 
 ## Week 6
+
+###########################  PROGRESS MARKER  ###########################
 
     Daily q:    -
     Lecture:    Data Structures for graphs
