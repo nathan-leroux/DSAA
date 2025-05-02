@@ -1,3 +1,147 @@
 Divide and Conquer
 
+   The Design technique of 'divide and conquer' is the process of being able to split a problem into two small parts repeatedly, solving them and then merging them back together
+   This will result in a faster algorithm when the process of merging the subproblems is faster than solving each of them.
+
+   examples include Binary search, merge sort and fast Fourier transforms.
+
+
+   5.1 Binary search and related algorithms
+
+      Binary search (through something sorted) is the most obvious example of a divide and conquer algorithm.
+      By repeatedly comparing the required key with the midpoint and then continuing the search on the half where the key must be, the possible position of the key is halved with each recursion.
+
+      5.1.1 Counting Occurrences
+
+         A variation of binary search, suppose we wanted to count the amount of times a value occoured in a sorted list.
+         One possible way would be to use binary search to find an occurrence of the value, then iterate out each way until the key was no longer found.
+         However if the entire array was the value this would give O(N) time.
+         Instead by searching for the upper and lower boundaries of the key (which both take logn time), the difference between indexes would be the total occurrences. Giving the total in O(logn) time.
+
+      5.1.2 One-sided binary search
+
+         Almost the same as a binary search, suppose there is no upper bound of the array and it extends indefinitely. By testing the item at exponential indexes (2,4,8,16 etc.) a bounds can be found for in which the item occours in logn time, from there regular binary search can be used.
+
+      5.1.3 Finding square roots
+
+         calculating square and other roots use binary searches.
+         the square root of n must be between n and 1 (for n >= 1).
+         by comparing the power of the midpoint (m^2 where m = (n-1)/2 ) with n, this comparison can be used to do a binary search where the result will be within .5 of the answer in logn time.
+
+
+   5.3 Recurrence Relations
+
+      Recurrence relations describes a function that is defined in terms of itself.
+      familiar functions can be expressed such as multiplication series, powers.
+      including less familiar ones such as Fibonacci numbers and factorials
+
+      5.3.1 Divide and Conquer Recurrences
+
+         The worst case time taken by a divide and conquer algorithm is described by the following:
+
+         T(n) = a . T(n / b) + f(n)
+
+         T(n)     is the worst case time an algorithm will run in
+         a        is the number of sub problems the recursion splits into
+         b        is how much smaller the sub problems become
+         f(n)     is the constant time taken to combine sub problem results back together
+
+
+   5.4 Solving Divide and Conquer Recurrences
+
+      for recurrences of the form described above it is normally easy to figure out the worst case run time, normally falls into one of three distinct cases.
+      The master therom describes how the cost of combining the recurrences relates to the cost of solving them.
+
+      Master Theorem:
+      1     f(n) = O( n^( log(b)a-e ))
+      2     f(n) = Theta( n^( log(b)a ))
+      3     f(n) = Omega( n^( log(b)a+e ))
+
+
+      exmplanation:
+
+      1     'too many leaves'
+            If the number of leaf nodes outweighs the cost of evaluating each leaf.
+            the internal evaluation cost is decreasing each level
+            running time is O( n^( log(b)a ))
+
+      2     'equal work per level'
+            if the sum of evaluation at each level is equal, running time is the cost per recursion level multiplied by the number of levels
+            running time is O( n^( log(b)a ) * lgn)
+
+      3     'too expensive to divide'
+            if the cost of partitioning and dividing outweigh the cost of actually evaluating each level, it will dictate the worst case running time.
+
+
+   5.5 Fast Multiplication
+
+      consider how you were taught to work out multiplication on paper in school
+
+      54
+      38
+   x____
+     432
+    1620
+   +____
+    2052
+
+   what you could think is going on is you are solving a polynomial where x = 10^m
+   by splitting the process of multiplication into a polynomial multiplication, you have done:
+
+   T(n) = 4T(n/2) + O(n)
+
+   still O(n^2), so nothing gained :(
+   however fancier techniques such as Karatsuba's alg and others where more multiplication tasks are exchanged for addition making worst case run time < O(n^2) as 'a' decreases
+
+
+   5.6 Largest Subrange and Closest Pair
+
+      finding the largest summing sub-array from an array can be solved with divide and conquer by spliting in halve, finding max then checking for the largest spanning 
+
+      doing constant work each division then having logn levels meets case 2 of the master theorem. giving nlogn running time
+
    
+   5.7 Parallel Algorithms
+
+      good ol concurrency
+
+      5.7.1 Data Parallelism
+
+         Divide and conquer is most suited to take advantage of parallelism.
+         Not very interesting from an algorithm perspective but effective in cases
+
+      5.7.2 Pitfalls of Parallelism
+
+         Shares a lot with traditional concurrency problems
+         small upper bound on the potential speedup as there is only a finite number of cores in any machine.
+         The speedup from concurrency is a linear gain, better gains can be found by simply finding a better algorithm
+         Tough to debug, good old data races.
+
+
+   5.9 Convolution
+      
+      Convolution is a formal mathematical operation (like multiplication or integration), that i have never heard of before.
+      Formal definition is to combine two mathematical functions in some way to produce a new function.
+      A notable point is that for any polynomial function to the order of n (eg. 4x^n)
+      can be represented by n+1 points.
+      For example a linear function can be described by 2 points, quadratic with 3 etc.
+      This makes functions and sets of points interchangable (i think).
+      What convolution is in an applicable sense is when you have two lists, invert one and by shifting the offset of one across all combinations, take the sum of dot products between elements.
+      Through straight wizard shit, this can be done in nlogn time using 'discrete forier transformations'. this makes clever use of complex numbers to cancel out opposing dot-product terms , reducing work.
+      
+      5.9.1 Applications of Convolution
+
+         Convolutions occour typically when you are trying all possible ways of doing things that add up to k, or when sliding a mask A over a sequence b and calculating at each possition.
+
+         -  Integer multiplication
+            any integer can be seen as a polynomial with base 10.
+
+         -  Cross-corrlation
+            for two time series A and B, the cross-correlation function measures the similarity by displacement of one relative to another
+
+         -  Moving average filters
+            such as smoothing time series data
+
+         -  String matching
+            matching a substring within a string can be done by describing each letter as a binary vector instead, the dot product will be m if the substring starts at that position in the text
+      
