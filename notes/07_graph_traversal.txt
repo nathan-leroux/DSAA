@@ -1,0 +1,173 @@
+Graph Traversal
+
+   Graphs are a model for describing differant organization structures such as transportation systems, human interactions and telecommunication networks.
+   A graph is defined as a set of vertices 'V' together with a set of edges 'E', giving G = (V,E)
+
+   7.1 Flavors of Graphs
+
+      There can be different fundamental properties of graphs that will impact your implementation:
+         - Undirected vs Directed
+            A graph is undirected if the direction of traversal between nodes is not important, an example of a directed graph would be one-way streets.
+         - Unweighted vs Weighted
+            In weighted graphs, each edge is given a numerical value. An example would be a road's distance. Unweighted graphs have no cost distinction between vertices.
+         - Simple vs Non-Simple
+            Non-Simple graphs can contain edges that form a loop to the same vertices(x,x) and also multiple edges between two points.
+         - Sparse vs Dense
+            Graphs are considered sparse when only a small portion of possible vertex pairs actually have an edge connecting them.
+         - Cyclic vs Acyclic
+            A cycle is when a graph contains a closed path of 3 or more vertices.
+            Directed acyclic graphs (DAGs) are where directed edges indicate that vertex X must be before vertex Y.
+         - Embedded vs Topological
+            A graph is embedded if vertices and edges are assigned geometric positions, any drawing of a graph is an embedding.
+            Graphs can be purely defined by the geometry of an embedding (given as coordinates).
+         - Implicit vs Explicit
+            Explicit graphs are constructed upfront and then traversed.
+            Implicit graphs are built as they are used, a good example of an implicit graph is a backtrack search.
+         - Labelled vs Unlabelled
+            When vertices have been allocated an identifier, it is a labelled graph.Most graphs arising in applications are naturally labelled.
+
+   7.2 Data Structures for Graphs
+
+      An adjacency matrix is representing Nodes as columns and rows, and Edges as the value of Node intersections.
+      However with sparse graphs, majority of this matrix would be unused.
+
+      Adjacency lists use linked lists to describe which vertices each vertex is connected too.
+      Undirected edges will appear twice in the datastructure due to being bidirectional.
+      The degree field of the graph counts the number of entries for a given vertex.
+
+
+   7.6 Breadth-First Search
+
+      A Breadth-First Search is a graph searching algorithm in which all of the edges and vertices of the graph are visited.
+      At some point in the search each vertex transitions from 'undiscovered' to 'discovered' finally to 'processed'.
+      The result of the search processes the graph into a tree which describes the shortest path to each node, the edges that do not feature in the tree, for undirected graphs non-tree edges can only point to the same level or lower. for directed they can point higher.
+
+      Implemented with two boolean arrays to indicate 'discovery level' and an index array to describe what vertex is another vertex's 'parent', used in finding shortest paths.
+      For each vertex discovered they are added to a queue, connected vertices are added to and then the original is marked as complete.
+
+
+      7.6.1 Exploiting Traversal
+
+         Different algorithms can be implemented by changing how new edges/vertices are processed and when during the process they are implemented.
+
+
+      7.6.2 Finding Paths
+      
+         The shortest path to any other vertex will be the described by the resulting tree.
+         The path can be found by starting at the desired vertex and following the parent relations back to the root.
+
+
+   7.7 Applications of Breadth-First Search
+
+      optimal searches can always be done in linear time
+
+      A graph is connected if there is a path between any two vertices.
+      A connected component of an undirected graph is a set of vertices such that any vertex can be reached from any other one.
+      A large number of graph problems can be solved by counting/finding connected components.
+
+      The vertex-coloring problem involves assigning 'colour labels' to vertices such that no edge links two vertices of the same colour.
+      A common problem in scheduling applications where vertices of the same colour represent tasks that require a common resource.
+      A graph is bipartite if it can be coloured with only 2 colours.
+
+
+   7.8 Depth-First Search
+
+      Of the two primary graphs search algorithms (the other being Breadth First Search), Depth first explores using a stack to keep track of the discovered vertices instead of a queue.
+      In effect this means all the ancestors of the first seached node are discovered before the second searched node
+
+      Implementation of dfs maintains a notion of traversal time, which incremenets when stepping into a new node, and while stepping out of it.
+      If x is an ancestor of y then:
+         - x will be entered before y
+         - x will be exited after y, as all children will be discovered before x is stepped out of
+
+      The traversal time can be used to describe how many descendants a node has (half of the range of traversal time)
+
+      Due to the way nodes are discovered, back-edges cannot point to a sibling or cousin node, only ancestors.
+      This paritions all edges into either 'tree edges' or 'back edges' for undirected graphs.
+
+      Uses the same idea as backtracking (combinatorials), checks all further possibilities before backing up when no more exist.
+
+
+   7.9 Applications of Depth-First Search
+
+      Depth first search is subtle.
+      Correct implementation of an algorithm depend on when nodes and edges are processed
+      do you process a node before exploring any of it's edges? or after all of them?
+      do you process an edge as soon as it is found? or after it's connecting node?
+
+      How do you tell if an you have previously traversed an edge?
+      if the next node is undiscovered then not yet
+      if the next node is fully processed then yes
+      but what about only 'discovered'? if the next node is the parent of the current node than yes, but otherwise no and it is a back edge
+      
+
+      7.9.1 Finding Cycles
+      (just one cycle bro)
+
+         Back edges are the key to finding cycles in a graph
+         If all edges are tree edges, there is no cycle in the graph
+         If back edges exist however, from x to ancestor y. This creates a cycle with the tree path from y to x
+
+
+      7.9.2 Articulation Vertices
+
+         An Articulation vertex is a vertex that if deleted, would disconnect other vertices from the rest of the graph.
+         This makes a single point of failure and makes the graph fragile
+
+         Finding Articulation vertices through brute force can be done by deleting each vertex and testing whether all other nodes can be reached O(n^2).
+         Can be done in linear time however using a DFS.
+
+         Articulation vertices can be found by considering back edges.
+         If there were no back edges in the DFS...
+            - All internal nodes would be articulation nodes, leaves would be disconnected.
+            - leaf nodes would not be, as removing them does not disconnect anything else.
+            - if the root node has 2 or more children, it is an articulation.
+            - if the root node has only 1, it is considered a leaf.
+
+         A back edge from x back to y ensures that no nodes between x and y can be articulation vertices.
+         To determine if a vertex is not an articulation, the furthest back reachable ancestor must be tracked.
+
+         An articulation vertex occours when:
+            - The root has two or more children, no backedge can exist the subtrees below.
+            - If earliest reachable is itself, the parent must be an articulation
+            - If the earliest reachable is its parent, then the deletion of the parent would disconnect the current vertex
+
+
+   7.10 Depth-First Search on Directed Graphs
+   
+      When searching undirected graphs, it is only possible to get tree edges and back edges.
+      With directed graphs due to there one-direction edges, it is possible to also get forward edges and cross edges.
+      This makes DFS on directed graphs even more subtle with the increased complexity.
+
+
+      7.10.1 Topological Sorting
+
+         Topological sorting a common operation on directed acyclic graphs.
+         A directed acyclic graph (DAG) is a directional graph with no back edges (meaning no loops).
+         Gives an ordering of so each vertex can be processed before any of it's successors.
+
+         Labeling the vertices in reverse order that they are marked processed defines a topological sort.
+         Consider exploring each edge (x,y) while exploring vertex x:
+            - if y is undiscovered, we start a DFS of y. Meaning y will be marked processed before x and so will appear after x on a topological sort
+            - if y is discovered but not processed, it is a back edge and the graph is not a DAG.
+            - if y is processed, y will have been marked processed before x, and x will appear before on a topological sort.
+
+
+      7.10.2 Strongly Connected Components
+
+         A directed graph is strongly connected if there is a directed path between any two vertices.
+         A road network irl is strongly connected, it wouldn't make much sense if you could drive somewhere but not drive back out.
+
+         To test if a graph is strongly connected test of from any vertex v:
+            1. all vertices are reachable from v
+            2. v is reachable from all vertices
+
+         To test for 1, simply do a BFS or DFS and check if all vertices were found.
+         To test for 2, construct the transpose of the graph and do BFS or DFS
+
+         The transpose of the graph is identical but all directed edges are reversed.
+         any path from vertices v to z in the transpose correspondes to to z to v in the regular graph.
+
+         Directed graphs can be partitioned into strongly connected components using two traversals.
+         The first pushing vertices on a stack in reverse order (like with topological sort)
+         Second traversal is done on the transposed graph, vertices are considered in the order they appear on the stack (not the reverse), each traversal from a vertex v will discover all the vertices that have a path to v, These reachable vertices define the strongly connected components of vertex v.
