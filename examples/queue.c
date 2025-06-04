@@ -1,10 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "queue.h"
-#include "linked_list.h"
-
 
 /*
  * Queue example
@@ -33,6 +28,10 @@ Queue* queue_init(void) {
 }
 
 
+bool queue_is_empty(Queue* q) {
+    return q->start == NULL;
+}
+
 void enqueue(Queue* queue, char input) {
     list_append(&queue->start, input);
 
@@ -57,6 +56,7 @@ char dequeue(Queue* queue) {
 
 void example_queue(void) {
     Queue* queue = queue_init();
+
     char* string = "abc";
 
     printf("## Queue example\n");
@@ -80,6 +80,7 @@ void example_queue(void) {
         printf("dequeue: %c\n", dequeue(queue));
     }
 
+    printf("empty? %b\n", queue_is_empty(queue));
     printf("##\n");
     printf("## null deque: %d\n", dequeue(queue) == 0);
 }

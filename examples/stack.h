@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
 #include "dynamic_array.h"
 
 #ifndef STACK_H
@@ -8,6 +13,7 @@ typedef struct {
 } Stack;
 
 Stack* stack_init(void);
+bool stack_is_empty(Stack*);
 void push(Stack*, char);
 char pop(Stack*);
 void example_stack(void);

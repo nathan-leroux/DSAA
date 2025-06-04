@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "stack.h"
-
 
 /*
  * Stack example
@@ -23,6 +18,11 @@ Stack* stack_init(void) {
     new_stack->data = dynarray_init(2);
 
     return new_stack;
+}
+
+
+bool stack_is_empty(Stack* s) {
+    return s->data->data_end == 0;
 }
 
 
