@@ -10,8 +10,14 @@
 #include "stack.h"
 
 #define MAXV 10
-#define GRAPH_FILE "graph.txt"
+#define GRAPH_FILE "easy.txt"
 
+enum Edge_t {
+    TREE,
+    BACK,
+    FORWARD,
+    CROSS,
+};
 
 typedef struct Edgenode {
     int y;
@@ -29,20 +35,24 @@ typedef struct {
 } Graph;
 
 
-typedef struct {
+typedef struct Search {
     bool discovered[MAXV+1];
     bool processed[MAXV+1];
     int parent[MAXV+1];
     int entry[MAXV+1];
     int exit[MAXV+1];
-    void (*process_early)(int);
-    void (*process_late)(int);
-    void (*process_edge)(int, int);
+    Stack* stack;
+    void (*process_early)(int, struct Search*);
+    void (*process_late)(int, struct Search*);
+    void (*process_edge)(int, int, struct Search*);
 } Search;
 
 
-Search* init_search(void (int), void (int), void (int, int));
+Search* init_search(void (int, Search*), void (int, Search*), void (int, int, Search*));
 Graph* init_graph(bool);
+void breadth_first_search(Graph*, Search*, int);
+int depth_first_search(Graph*, Search*, int, int);
+
 void example_graph(void);
 
 #endif

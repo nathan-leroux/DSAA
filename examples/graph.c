@@ -19,14 +19,21 @@ Graph* init_graph(bool directed) {
 }
 
 
-Search* init_search(void (*early)(int), void (*late)(int), void (*edge)(int, int)) {
+Search* init_search(
+        void (*early)(int, Search*),
+        void (*late)(int, Search*),
+        void (*edge)(int, int, Search*))
+{
     Search* s = malloc(sizeof(Search));
+
+    s->stack = stack_init();
 
     memset(s->parent, 0 , sizeof(s->parent));
     memset(s->discovered, 0 , sizeof(s->discovered));
     memset(s->processed, 0 , sizeof(s->processed));
     memset(s->entry, 0 , sizeof(s->entry));
     memset(s->exit, 0 , sizeof(s->exit));
+
 
     s->process_early = early;
     s->process_late = late;
@@ -107,7 +114,7 @@ void print_search(Search* s) {
 }
 
 
-void read_graph(char* filename, Graph* g, bool directed) {
+void read_graph(char* filename, Graph* g) {
     int edges_no;
     int x, y;
     int ret;
@@ -130,24 +137,68 @@ void read_graph(char* filename, Graph* g, bool directed) {
             exit(EXIT_FAILURE);
         }
 
-        insert_edge(g, x, y, false);
+        insert_edge(g, x, y, g->directed);
     }
 
     fclose(fp);
 }
 
 
-static void pass(int n) {
+enum Edge_t get_edge_type(int x, int y, Search* s) {
+    if (s->parent[y] == x) {
+        return TREE;
+    }
+
+    if (s->discovered[y] && !s->processed[y]) {
+        return BACK;
+    }
+
+    if (s->processed[y] && (s->entry[y] > s->entry[x])) {
+        return FORWARD;
+    }
+
+    if (s->processed[y] && (s->entry[y] < s->entry[x])) {
+        return CROSS;
+    }
+
+    printf("SELF LOOP! (%d, %d)\n", x, y);
+    return -1;
+}
+
+
+static void pass(int n, Search* s) {
     
 }
 
 
-static void print_early(int n) {
+static void topo_late(int x, Search *s) {
+    printf("push: %d\n", x);
+    push(s->stack, x);
+}
+
+static void topo_edge(int x, int y, Search* s) {
+    if (get_edge_type(x, y, s) == BACK) {
+        printf("CYCLE FOUND, graph is not a DAG\n");
+    }
+}
+
+void topo_sort(Graph* g, Search* s) {
+    for (int i=1; i<=g->nvertices; ++i) {
+        if (!s->discovered[i]) {
+            depth_first_search(g, s, i, 0);
+        }
+    }
+}
+
+
+
+
+static void print_early(int n, Search* s) {
     printf("%d: discovered\n", n);
 }
 
 
-static void print_edge(int x, int y) {
+static void print_edge(int x, int y, Search *s) {
     printf("\tedge: %d %d\n", x, y);
 }
 
@@ -166,13 +217,13 @@ void breadth_first_search(Graph* g, Search* s, int start) {
     
     while (!queue_is_empty(queue)) {
         current_node = dequeue(queue);
-        s->process_early(current_node);
+        s->process_early(current_node, s);
 
         s->processed[current_node] = true;
 
         for (edge=g->edges[current_node]; edge != NULL; edge=edge->next) {
             if (!s->processed[edge->y] || g->directed) {
-                s->process_edge(current_node, edge->y);
+                s->process_edge(current_node, edge->y, s);
             }
 
             if (!s->discovered[edge->y]) {
@@ -182,7 +233,7 @@ void breadth_first_search(Graph* g, Search* s, int start) {
             }
         }
 
-        s->process_late(current_node);
+        s->process_late(current_node, s);
     }
 }
 
@@ -194,18 +245,18 @@ int depth_first_search(Graph* g, Search* s, int node, int time) {
     s->entry[node] = time;
 
     s->discovered[node] = true;
-    s->process_early(node);
+    s->process_early(node, s);
 
     for (edge = g->edges[node]; edge != NULL; edge = edge->next) {
         if (s->discovered[edge->y]) {
             if ((!s->processed[edge->y] && (s->parent[node] != edge->y)) || g->directed) {
-                s->process_edge(node, edge->y);
+                s->process_edge(node, edge->y, s);
             }
 
             continue;
         }
 
-        s->process_edge(node, edge->y);
+        s->process_edge(node, edge->y, s);
         s->parent[edge->y] = node;
         time = depth_first_search(g, s, edge->y, time);
     }
@@ -214,22 +265,28 @@ int depth_first_search(Graph* g, Search* s, int node, int time) {
     s->exit[node] = time;
 
     s->processed[node] = true;
-    s->process_late(node);
+    s->process_late(node, s);
 
     return time;
 }
 
 
 void example_graph(void) {
+    Graph* breadth_g = init_graph(false);
+    Graph* topo_g = init_graph(true);
 
-    Graph* g = init_graph(false);
-    Search* s = init_search(&print_early, &pass, &print_edge);
+    Search* breadth_s = init_search(&print_early, &pass, &print_edge);
+    Search* topo_s = init_search(&pass, &topo_late, &topo_edge);
 
-    read_graph(GRAPH_FILE, g, false);
+    printf("Breadth First\n");
+    read_graph(GRAPH_FILE, breadth_g);
+    breadth_first_search(breadth_g, breadth_s, 1);
+    print_graph(breadth_g);
+    print_search(breadth_s);
 
-    print_graph(g);
-
-    depth_first_search(g, s, 1, 0);
-
-    print_search(s);
+    printf("Topological Sort\n");
+    read_graph(GRAPH_FILE, topo_g);
+    print_graph(topo_g);
+    topo_sort(topo_g, topo_s);
+    stack_print(topo_s->stack);
 }

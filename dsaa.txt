@@ -78,11 +78,15 @@ ______  _____  ___    ___
     upload and properly label notes
     data structures
     sorting
+
+
+## Extra Chapters
+    chapters 5 and 6 read
+    notes
         
 
 ## Week 6
 
-###########################  PROGRESS MARKER  ###########################
 
     Daily q:    -
     Lecture:    Data Structures for graphs
@@ -101,6 +105,7 @@ ______  _____  ___    ___
     Daily g:    7-4
     Lecture:    Topological sort/ connectivity
     Read Text:  pg234
+###########################  PROGRESS MARKER  ###########################
     Notes
 
     Daily g:    7-28

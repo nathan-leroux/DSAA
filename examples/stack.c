@@ -26,6 +26,19 @@ bool stack_is_empty(Stack* s) {
 }
 
 
+void stack_print(Stack* s) {
+    printf("[");
+    if (!stack_is_empty(s)) {
+        printf("%d", pop(s));
+    }
+
+    while (!stack_is_empty(s)) {
+        printf(", %d", pop(s));
+    }
+    printf("]\n");
+}
+    
+
 void push(Stack* stack, char input) {
     dynarray_append(stack->data, input);
 }
