@@ -161,7 +161,6 @@ enum Edge_t get_edge_type(int x, int y, Search* s) {
         return CROSS;
     }
 
-    printf("SELF LOOP! (%d, %d)\n", x, y);
     return -1;
 }
 
@@ -172,15 +171,16 @@ static void pass(int n, Search* s) {
 
 
 static void topo_late(int x, Search *s) {
-    printf("push: %d\n", x);
     push(s->stack, x);
 }
+
 
 static void topo_edge(int x, int y, Search* s) {
     if (get_edge_type(x, y, s) == BACK) {
         printf("CYCLE FOUND, graph is not a DAG\n");
     }
 }
+
 
 void topo_sort(Graph* g, Search* s) {
     for (int i=1; i<=g->nvertices; ++i) {
@@ -189,8 +189,6 @@ void topo_sort(Graph* g, Search* s) {
         }
     }
 }
-
-
 
 
 static void print_early(int n, Search* s) {
@@ -278,12 +276,13 @@ void example_graph(void) {
     Search* breadth_s = init_search(&print_early, &pass, &print_edge);
     Search* topo_s = init_search(&pass, &topo_late, &topo_edge);
 
-    printf("Breadth First\n");
+    printf("Breadth First Search\n");
     read_graph(GRAPH_FILE, breadth_g);
     breadth_first_search(breadth_g, breadth_s, 1);
     print_graph(breadth_g);
     print_search(breadth_s);
 
+    printf("\n");
     printf("Topological Sort\n");
     read_graph(GRAPH_FILE, topo_g);
     print_graph(topo_g);

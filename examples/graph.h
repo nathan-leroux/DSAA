@@ -10,7 +10,7 @@
 #include "stack.h"
 
 #define MAXV 10
-#define GRAPH_FILE "easy.txt"
+#define GRAPH_FILE "dag.txt"
 
 enum Edge_t {
     TREE,
