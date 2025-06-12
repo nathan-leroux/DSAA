@@ -1,0 +1,17 @@
+Weighted Graph Algorithms
+
+   Weighted graphs exist when the value or 'weight' of each edge connecting vertices are not equal.
+   Real world examples of edges being different weights include construction costs, travel time, length, etc.
+   Graph techniques explained before still apply but the ones described below deal with the distinction in edge weights.
+
+
+   8.1 Minimum Spanning Trees
+
+      A 'spanning tree' is a subset of edges such that each node is connected in a tree containing no back edges. Essentially the minimum number of edges to connect all the nodes.
+      A 'minimum spanning tree' is a spanning tree where the edge weights sum to the smallest possible value, given the available edges.
+      It is possible for there to be multiple correct minimum spanning trees for one graph.
+
+
+      8.1.1 Prim's Algorithm
+
+         
