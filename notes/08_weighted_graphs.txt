@@ -14,4 +14,118 @@ Weighted Graph Algorithms
 
       8.1.1 Prim's Algorithm
 
-         
+         Prim's Algorithm creates a minimum spanning tree by starting at one node, then successivly adding edges with the smallest edge weight that add a new node to the tree.
+         Prim's is described as a greedy algorithm as it always takes the best option locally without regard for the global structure.
+         for efficiency, the cheapest edge to add each new node to the tree is tracked. On adding each node, the cheapest edges are updated.
+         due to efficiency gains, comparing edges for the new node can be done in constant time, making Prims O(n)
+
+      8.1.2 Kruskal's Algorithm
+      
+         Similar to Prim's, Kruskal's is a greedy algorithm
+         Works by connecting components until a minimum tree is formed.
+         Initially, each node is considered as its own component.
+         The Algorithm then considers the smallest edge that would connect two separate components, these two are now combined and considered a single component.
+         If the smallest edge would not connect two separate components, (meaning that the two nodes considered were part of the same), then the edge is discarded as it would create a cycle.
+
+      8.1.3 The Union Find Data structure
+
+         Set partitions are where a universal set (for example, positive integers), is divided into multiple disjoint subset.
+         Disjoint meaning no one element is a member of multiple subsets, one only.
+         Set partitions are commonly seen in graph problems, for example connected components.
+         Checking what subset an element is a part of and combining (union) of two subsets are the two operations that make up the union find data structure.
+         Implemented using a 'backwards tree'
+         find() implemented by walking up pointers to the root of the tree O(logn)
+         union() implemented by finding the root of each element then adding the smallest sub-tree to the large one
+         smallest goes to the largest so least amount of metadata needs to be updated.
+
+      8.1.4 Variations of Minimum Spanning Trees
+
+         Maximum Spanning Tree
+            - maximising the edge weight overall between nodes
+
+         Minimum Product Spanning Tree
+            - minimising the total weight when the edges are combined together through multiplication
+
+         Minimum Bottleneck Spanning Tree
+            - Spanning Tree seeking to minimise the maximum edge weight for any single edge
+            - Typical when edge weights are interpreted as costs, strengths or capacities.
+
+         Minimum Steiner Trees
+            - where adding intermediate vertices is possible to assist minimum weight.
+            - think connected houses to the power grid using power poles
+
+         Low-Degree Minimum Tree
+            - minimum tree with the fewest degrees (edges connected to a single node) possible
+
+
+   8.3 Shortest Paths
+
+      A path in the context of a graph is the minimum total weight between two nodes.
+      The shortest path in unweighted graphs is simple and can be found with a Breadth First Search
+      however, this is not the case in a weighted graph.
+      the shortest path might not contain the fewest number of edges and so more nuanced algorithms are needed
+
+      The differance between the shortest path in a graph and a minimum spanning tree is the spanning tree aims to connect all nodes with the minimum cost
+      it does not have a notion of a 'starting point'
+      The shortest Path however does, and this changes the solution given
+      Calculating shortest paths figures out the shortest path to any node from a given starting node
+
+      8.3.1 Dijkstra's Algorithm 
+
+         Dijkstra's Path starts by providing a starting node.
+         each edge connected to the node is evaluated, and the known shortest path for the new found nodes is recorded,
+         each new node with the shortest path to it is added into a priority queue
+         the node with shortest path to it is explored next
+         exploring all connected edges is repeated on the new node, if a shorter path to a previously found node is found, recording is updated
+         if a node has previously not been found (no recorded parent), shortest path is updated and node is added to priority queue.
+         repeated until the priority queue is empty and the shortest path from the starting node to all nodes will be found.
+
+         The only differance between Prim's and Dijkstra's is on how the most suited node is picked next, shortest path to or smallest edge weight.
+
+         Dijkstra's is O(n^2) as all nodes are considered, and for each node all edges are considered??? (unsure)
+
+
+      8.3.2 All Pairs Shortest Path
+
+         Solves the problem of needing to find the 'centre' vertex of a graph
+         the centre vertex minimises the average distance to any other node.
+         The solution involves calculating the distance from each n, to each n. this means the result is a n^2 matrix
+
+         The Floyd-Warshall algorithm gives the shortest length from any node to any node.
+         this is calculated by comparing the direct distance between two nodes, then iterating through possible intermediate nodes to determine if a shorter path exists, effectively finding shortest sections.
+         if it does exist, the adjacency matrix is updated with the new shortest length. This implicitly uses the new route via the intermediate, but is not recorded.
+         by iterating through all possible node pairs considering all possible intermediates, the shortest lengths are correctly found.
+
+         due to the tripple for loop, Floyd-Warshall is found in O(n^3), making it usefull up to only a few hundred nodes
+
+
+      8.3.3 Transitive Closure
+
+         Transitive closure of a graph describes from the current node, which nodes are reachable.
+         Floyd-Warshall can be used to calculate this,
+         If the shortest path is still the large default value set during initialisation, then the node is unreachable
+         any other result and the node is reachable
+
+
+   8.5 Network Flows and Bipartite Matching
+
+      using the analogy of pipes where the throughput of a pipe can be described as an edge weight
+      A network flow is what rate of 'volume' can be transfered between points a and b in graph G while respecting the throughput limits of each pipe.
+
+      8.5.1 Bipartite Matching
+
+         A matching is a subset of edges such no two edges share a vertex.
+         This arsies commonly in scheduling problems, asigning workers to jobs etc.
+
+         A graph is bipartite or two-colourable if all vertices can be divided into either L or R subsets
+         such that all edges in G have one vertex in L and one in R
+         A maximum cardinal bipartite matching (big words funny man) means maximising the amount of pairs matched in the graph
+
+         the maximum can be found using network flow, source is positioned on the left, connected to all nodes in subset L
+         sink is positioned on the right, connected to all nodes in subset R
+         maximum network flow gives the max pairs
+
+
+      8.5.2 Network Flow
+
+         To be continued...
