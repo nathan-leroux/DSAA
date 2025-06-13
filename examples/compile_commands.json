@@ -1,0 +1,200 @@
+[
+  {
+    "arguments": [
+      "/usr/local/bin/clang",
+      "-std=c17",
+      "--include-directory=include",
+      "-ggdb",
+      "-Werror",
+      "-Wall",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/binary_tree.o",
+      "src/binary_tree.c"
+    ],
+    "directory": "/home/nath/Code/Study/DSAA/examples",
+    "file": "/home/nath/Code/Study/DSAA/examples/src/binary_tree.c",
+    "output": "/home/nath/Code/Study/DSAA/examples/build/binary_tree.o"
+  },
+  {
+    "arguments": [
+      "/usr/local/bin/clang",
+      "-std=c17",
+      "--include-directory=include",
+      "-ggdb",
+      "-Werror",
+      "-Wall",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/dictionary.o",
+      "src/dictionary.c"
+    ],
+    "directory": "/home/nath/Code/Study/DSAA/examples",
+    "file": "/home/nath/Code/Study/DSAA/examples/src/dictionary.c",
+    "output": "/home/nath/Code/Study/DSAA/examples/build/dictionary.o"
+  },
+  {
+    "arguments": [
+      "/usr/local/bin/clang",
+      "-std=c17",
+      "--include-directory=include",
+      "-ggdb",
+      "-Werror",
+      "-Wall",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/dynamic_array.o",
+      "src/dynamic_array.c"
+    ],
+    "directory": "/home/nath/Code/Study/DSAA/examples",
+    "file": "/home/nath/Code/Study/DSAA/examples/src/dynamic_array.c",
+    "output": "/home/nath/Code/Study/DSAA/examples/build/dynamic_array.o"
+  },
+  {
+    "arguments": [
+      "/usr/local/bin/clang",
+      "-std=c17",
+      "--include-directory=include",
+      "-ggdb",
+      "-Werror",
+      "-Wall",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/graph.o",
+      "src/graph.c"
+    ],
+    "directory": "/home/nath/Code/Study/DSAA/examples",
+    "file": "/home/nath/Code/Study/DSAA/examples/src/graph.c",
+    "output": "/home/nath/Code/Study/DSAA/examples/build/graph.o"
+  },
+  {
+    "arguments": [
+      "/usr/local/bin/clang",
+      "-std=c17",
+      "--include-directory=include",
+      "-ggdb",
+      "-Werror",
+      "-Wall",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/hashing.o",
+      "src/hashing.c"
+    ],
+    "directory": "/home/nath/Code/Study/DSAA/examples",
+    "file": "/home/nath/Code/Study/DSAA/examples/src/hashing.c",
+    "output": "/home/nath/Code/Study/DSAA/examples/build/hashing.o"
+  },
+  {
+    "arguments": [
+      "/usr/local/bin/clang",
+      "-std=c17",
+      "--include-directory=include",
+      "-ggdb",
+      "-Werror",
+      "-Wall",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/linked_list.o",
+      "src/linked_list.c"
+    ],
+    "directory": "/home/nath/Code/Study/DSAA/examples",
+    "file": "/home/nath/Code/Study/DSAA/examples/src/linked_list.c",
+    "output": "/home/nath/Code/Study/DSAA/examples/build/linked_list.o"
+  },
+  {
+    "arguments": [
+      "/usr/local/bin/clang",
+      "-std=c17",
+      "--include-directory=include",
+      "-ggdb",
+      "-Werror",
+      "-Wall",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/nath/Code/Study/DSAA/examples",
+    "file": "/home/nath/Code/Study/DSAA/examples/src/main.c",
+    "output": "/home/nath/Code/Study/DSAA/examples/build/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/local/bin/clang",
+      "-std=c17",
+      "--include-directory=include",
+      "-ggdb",
+      "-Werror",
+      "-Wall",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/priority_queue.o",
+      "src/priority_queue.c"
+    ],
+    "directory": "/home/nath/Code/Study/DSAA/examples",
+    "file": "/home/nath/Code/Study/DSAA/examples/src/priority_queue.c",
+    "output": "/home/nath/Code/Study/DSAA/examples/build/priority_queue.o"
+  },
+  {
+    "arguments": [
+      "/usr/local/bin/clang",
+      "-std=c17",
+      "--include-directory=include",
+      "-ggdb",
+      "-Werror",
+      "-Wall",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/queue.o",
+      "src/queue.c"
+    ],
+    "directory": "/home/nath/Code/Study/DSAA/examples",
+    "file": "/home/nath/Code/Study/DSAA/examples/src/queue.c",
+    "output": "/home/nath/Code/Study/DSAA/examples/build/queue.o"
+  },
+  {
+    "arguments": [
+      "/usr/local/bin/clang",
+      "-std=c17",
+      "--include-directory=include",
+      "-ggdb",
+      "-Werror",
+      "-Wall",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/sorting.o",
+      "src/sorting.c"
+    ],
+    "directory": "/home/nath/Code/Study/DSAA/examples",
+    "file": "/home/nath/Code/Study/DSAA/examples/src/sorting.c",
+    "output": "/home/nath/Code/Study/DSAA/examples/build/sorting.o"
+  },
+  {
+    "arguments": [
+      "/usr/local/bin/clang",
+      "-std=c17",
+      "--include-directory=include",
+      "-ggdb",
+      "-Werror",
+      "-Wall",
+      "-pedantic",
+      "-c",
+      "-o",
+      "build/stack.o",
+      "src/stack.c"
+    ],
+    "directory": "/home/nath/Code/Study/DSAA/examples",
+    "file": "/home/nath/Code/Study/DSAA/examples/src/stack.c",
+    "output": "/home/nath/Code/Study/DSAA/examples/build/stack.o"
+  }
+]
