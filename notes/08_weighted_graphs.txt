@@ -14,10 +14,10 @@ Weighted Graph Algorithms
 
       8.1.1 Prim's Algorithm
 
-         Prim's Algorithm creates a minimum spanning tree by starting at one node, then successivly adding edges with the smallest edge weight that add a new node to the tree.
+         Prim's Algorithm creates a minimum spanning tree by starting at one node, then successively adding edges with the smallest edge weight that add a new node to the tree.
          Prim's is described as a greedy algorithm as it always takes the best option locally without regard for the global structure.
-         for efficiency, the cheapest edge to add each new node to the tree is tracked. On adding each node, the cheapest edges are updated.
-         due to efficiency gains, comparing edges for the new node can be done in constant time, making Prims O(n)
+         For efficiency, the cheapest edge to add each new node to the tree is tracked. On adding each node, the cheapest edges are updated.
+         Due to efficiency gains, comparing edges for the new node can be done in constant time, making Prims O(n)
 
       8.1.2 Kruskal's Algorithm
       
@@ -63,9 +63,9 @@ Weighted Graph Algorithms
       A path in the context of a graph is the minimum total weight between two nodes.
       The shortest path in unweighted graphs is simple and can be found with a Breadth First Search
       however, this is not the case in a weighted graph.
-      the shortest path might not contain the fewest number of edges and so more nuanced algorithms are needed
+      The shortest path might not contain the fewest number of edges and so more nuanced algorithms are needed
 
-      The differance between the shortest path in a graph and a minimum spanning tree is the spanning tree aims to connect all nodes with the minimum cost
+      The difference between the shortest path in a graph and a minimum spanning tree is the spanning tree aims to connect all nodes with the minimum cost
       it does not have a notion of a 'starting point'
       The shortest Path however does, and this changes the solution given
       Calculating shortest paths figures out the shortest path to any node from a given starting node
@@ -73,14 +73,14 @@ Weighted Graph Algorithms
       8.3.1 Dijkstra's Algorithm 
 
          Dijkstra's Path starts by providing a starting node.
-         each edge connected to the node is evaluated, and the known shortest path for the new found nodes is recorded,
-         each new node with the shortest path to it is added into a priority queue
+         Each edge connected to the node is evaluated, and the known shortest path for the new found nodes is recorded
+         Each new node with the shortest path to it is added into a priority queue
          the node with shortest path to it is explored next
          exploring all connected edges is repeated on the new node, if a shorter path to a previously found node is found, recording is updated
          if a node has previously not been found (no recorded parent), shortest path is updated and node is added to priority queue.
-         repeated until the priority queue is empty and the shortest path from the starting node to all nodes will be found.
+         Repeated until the priority queue is empty and the shortest path from the starting node to all nodes will be found.
 
-         The only differance between Prim's and Dijkstra's is on how the most suited node is picked next, shortest path to or smallest edge weight.
+         The only difference between Prim's and Dijkstra's is on how the most suited node is picked next, shortest path to or smallest edge weight.
 
          Dijkstra's is O(n^2) as all nodes are considered, and for each node all edges are considered??? (unsure)
 
@@ -96,7 +96,7 @@ Weighted Graph Algorithms
          if it does exist, the adjacency matrix is updated with the new shortest length. This implicitly uses the new route via the intermediate, but is not recorded.
          by iterating through all possible node pairs considering all possible intermediates, the shortest lengths are correctly found.
 
-         due to the tripple for loop, Floyd-Warshall is found in O(n^3), making it usefull up to only a few hundred nodes
+         due to the triple for loop, Floyd-Warshall is found in O(n^3), making it useful up to only a few hundred nodes
 
 
       8.3.3 Transitive Closure
@@ -109,23 +109,49 @@ Weighted Graph Algorithms
 
    8.5 Network Flows and Bipartite Matching
 
-      using the analogy of pipes where the throughput of a pipe can be described as an edge weight
-      A network flow is what rate of 'volume' can be transfered between points a and b in graph G while respecting the throughput limits of each pipe.
+      Using the analogy of pipes where the throughput of a pipe can be described as an edge weight
+      A network flow is what rate of 'volume' can be transferred between points a and b in graph G while respecting the throughput limits of each pipe.
 
       8.5.1 Bipartite Matching
 
          A matching is a subset of edges such no two edges share a vertex.
-         This arsies commonly in scheduling problems, asigning workers to jobs etc.
+         This arises commonly in scheduling problems, assigning workers to jobs etc.
 
          A graph is bipartite or two-colourable if all vertices can be divided into either L or R subsets
          such that all edges in G have one vertex in L and one in R
          A maximum cardinal bipartite matching (big words funny man) means maximising the amount of pairs matched in the graph
 
-         the maximum can be found using network flow, source is positioned on the left, connected to all nodes in subset L
+         The maximum can be found using network flow, source is positioned on the left, connected to all nodes in subset L
          sink is positioned on the right, connected to all nodes in subset R
          maximum network flow gives the max pairs
 
 
       8.5.2 Network Flow
 
-         To be continued...
+         Traditional network flow problems are based on the idea of augmented flow.
+         Augmented flow is an additional flow that can be added to increase the total flow.
+         If there is no additional augmented flow available, then the graph is said to be at capacity.
+
+         The residual flow graph is the graph with all it's edge capacities along with the array of current flows.
+         Between two nodes, the extra capacity of an edge is denoted by a backwards directed edge.
+         If there is a flow through an edge and no backwards edge, the edge is at capacity.
+
+         Deletion of a set of edges that separate the source from the sink is called a cut
+         A minimum cut is a cut thought the edges of least weight.
+         The flow through a network cannot be greater than the edge weight of the minimum cut.
+
+   
+   8.6 Randomized Min-Cut
+
+      Finding the mincut can be be done using a randomized algorithm enough times that we are very likely to find the minimum at least once.
+      Classified as a Monte-Carlo randomized algorithm.
+      For one iteration, random edges in the graph are 'contracted', meaning that the two vertices on opposing ends of the edge are merged.
+      The edge between opposing nodes becomes a self loop. Edges both leading to a third node from the two merged become doubled up.
+
+      Iterations continue until there is only two nodes remaining, the merged edges between them are counted and compared to the previous min
+      A single iteration has the chance of getting the correct result 1 / (n^2), not very large
+      if the iteration is performed n^2 logn times, extremely likely that the result will be correct.
+
+
+
+
