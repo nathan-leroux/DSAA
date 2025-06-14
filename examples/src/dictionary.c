@@ -21,9 +21,7 @@
  */
 
 // an implementation of a polynomial rolling hash function
-int
-hash(char* key)
-{
+int hash(char* key) {
   long hash = 0;
   long constant = 31;
 
@@ -34,17 +32,13 @@ hash(char* key)
   return hash % TABLE_SIZE;
 }
 
-Dictionary*
-dict_init(void)
-{
+Dictionary* dict_init(void) {
   Dictionary* new_htable = malloc(sizeof(Dictionary));
 
   return new_htable;
 }
 
-void
-dict_insert(Dictionary* htable, char* key, int value)
-{
+void dict_insert(Dictionary* htable, char* key, int value) {
   struct bucket* new_bucket = malloc(sizeof(struct bucket));
   struct bucket* existing_bucket = htable->data[hash(key)];
 
@@ -60,9 +54,7 @@ dict_insert(Dictionary* htable, char* key, int value)
   htable->data[hash(key)] = new_bucket;
 }
 
-struct bucket*
-dict_search(Dictionary* htable, char* key)
-{
+struct bucket* dict_search(Dictionary* htable, char* key) {
   int index = hash(key);
   struct bucket* selected = htable->data[index];
 
@@ -77,9 +69,7 @@ dict_search(Dictionary* htable, char* key)
   return NULL;
 }
 
-void
-dict_delete(Dictionary* htable, struct bucket* selected)
-{
+void dict_delete(Dictionary* htable, struct bucket* selected) {
   if (selected->prev != NULL) {
     selected->prev->next = selected->next;
   } else {
@@ -92,9 +82,7 @@ dict_delete(Dictionary* htable, struct bucket* selected)
   }
 }
 
-void
-example_dictionary(void)
-{
+void example_dictionary(void) {
   Dictionary* table = dict_init();
 
   printf("## Dictionary example\n");

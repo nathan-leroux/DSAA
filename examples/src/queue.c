@@ -13,15 +13,9 @@
  *
  */
 
-void
-queue_print(Queue* queue)
-{
-  list_print(queue->start);
-}
+void queue_print(Queue* queue) { list_print(queue->start); }
 
-Queue*
-queue_init(void)
-{
+Queue* queue_init(void) {
   Queue* new_queue = malloc(sizeof(Queue));
 
   new_queue->start = list_init();
@@ -30,15 +24,9 @@ queue_init(void)
   return new_queue;
 }
 
-bool
-queue_is_empty(Queue* q)
-{
-  return q->start == NULL;
-}
+bool queue_is_empty(Queue* q) { return q->start == NULL; }
 
-void
-enqueue(Queue* queue, char input)
-{
+void enqueue(Queue* queue, char input) {
   list_append(&queue->start, input);
 
   // set the end marker if it hasn't been
@@ -47,9 +35,7 @@ enqueue(Queue* queue, char input)
   }
 }
 
-char
-dequeue(Queue* queue)
-{
+char dequeue(Queue* queue) {
   if (queue->start == NULL) {
     return 0;
   }
@@ -60,9 +46,7 @@ dequeue(Queue* queue)
   return list_pop(&queue->start, popped_node);
 }
 
-void
-example_queue(void)
-{
+void example_queue(void) {
   Queue* queue = queue_init();
 
   char* string = "abc";

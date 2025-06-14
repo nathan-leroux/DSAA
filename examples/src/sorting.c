@@ -6,9 +6,7 @@
 
 #include "queue.h"
 
-char*
-array_init(char* string)
-{
+char* array_init(char* string) {
   // gotta be done this way as string literals are stored in read only memory
   // trying to mutate string literals gives segmentation faults
   char* result = calloc(sizeof(char), strlen(string));
@@ -17,17 +15,13 @@ array_init(char* string)
   return result;
 }
 
-void
-swap(char* c1, char* c2)
-{
+void swap(char* c1, char* c2) {
   char swap = *c1;
   *c1 = *c2;
   *c2 = swap;
 }
 
-void
-selection_sort(char* array)
-{
+void selection_sort(char* array) {
   char min_value;
   size_t min_index;
 
@@ -47,9 +41,7 @@ selection_sort(char* array)
   }
 }
 
-void
-insertion_sort(char* array)
-{
+void insertion_sort(char* array) {
   for (int index = 0; index < strlen(array); ++index) {
     printf("%s\n", array);
 
@@ -61,9 +53,7 @@ insertion_sort(char* array)
   }
 }
 
-void
-merge(char* array, int low, int middle, int high)
-{
+void merge(char* array, int low, int middle, int high) {
   Queue* sub1 = queue_init();
   Queue* sub2 = queue_init();
   char pop1;
@@ -103,9 +93,7 @@ merge(char* array, int low, int middle, int high)
   }
 }
 
-void
-merge_sort(char* array, int low, int high)
-{
+void merge_sort(char* array, int low, int high) {
   int middle;
 
   if (high - low > 1) {
@@ -117,18 +105,14 @@ merge_sort(char* array, int low, int high)
   }
 }
 
-Heap*
-heap_init(void)
-{
+Heap* heap_init(void) {
   Heap* new_heap = malloc(sizeof(Heap));
 
   new_heap->size = 0;
   return new_heap;
 }
 
-int
-index_parent(int index)
-{
+int index_parent(int index) {
   if (index == 0) {
     return -1;
   }
@@ -136,21 +120,11 @@ index_parent(int index)
   return (int)index / 2;
 }
 
-int
-index_young_child(int index)
-{
-  return index * 2;
-}
+int index_young_child(int index) { return index * 2; }
 
-int
-index_old_child(int index)
-{
-  return (index * 2) + 1;
-}
+int index_old_child(int index) { return (index * 2) + 1; }
 
-void
-heap_bubble_up(Heap* heap, int index)
-{
+void heap_bubble_up(Heap* heap, int index) {
   if (index_parent(index) == -1) {
     return;
   }
@@ -166,9 +140,7 @@ heap_bubble_up(Heap* heap, int index)
   }
 }
 
-void
-heap_insert(Heap* heap, char value)
-{
+void heap_insert(Heap* heap, char value) {
   if (heap->size == HEAP_SIZE) {
     printf("HEAP OVERFLOW!!!\n");
     return;
@@ -179,9 +151,7 @@ heap_insert(Heap* heap, char value)
   heap_bubble_up(heap, heap->size);
 }
 
-void
-heap_bubble_down(Heap* heap, int index)
-{
+void heap_bubble_down(Heap* heap, int index) {
   int min_index = index;
   char value = heap->data[index];
 
@@ -209,9 +179,7 @@ heap_bubble_down(Heap* heap, int index)
   }
 }
 
-char
-heap_pop_min(Heap* heap)
-{
+char heap_pop_min(Heap* heap) {
   if (heap->size <= 0) {
     printf("tried to pop from empty heap!\n");
     return -1;
@@ -225,9 +193,7 @@ heap_pop_min(Heap* heap)
   return min;
 }
 
-void
-heap_sort(char* array)
-{
+void heap_sort(char* array) {
   Heap* heap = heap_init();
 
   for (int i = 0; i < strlen(array); ++i) {
@@ -239,17 +205,13 @@ heap_sort(char* array)
   }
 }
 
-void
-my_print(char* array, int low, int high)
-{
+void my_print(char* array, int low, int high) {
   for (int i = low; i <= high; ++i) {
     printf("%c", array[i]);
   }
 }
 
-int
-partition(char* array, int low, int high)
-{
+int partition(char* array, int low, int high) {
   int min_index = low;
   int p_index = low + (rand() % (high - low));
 
@@ -269,9 +231,7 @@ partition(char* array, int low, int high)
   return min_index;
 }
 
-void
-quick_sort(char* array, int low, int high)
-{
+void quick_sort(char* array, int low, int high) {
   if (high > low) {
     int p = partition(array, low, high);
     quick_sort(array, low, p - 1);
@@ -279,9 +239,7 @@ quick_sort(char* array, int low, int high)
   }
 }
 
-void
-example_sorting(void)
-{
+void example_sorting(void) {
   char* selection_string = array_init("the five boxing wizards jump quickly");
   selection_sort(selection_string);
   printf("sorted array: %s\n", selection_string);

@@ -3,13 +3,11 @@
 
 #define HEAP_SIZE 50
 
-typedef struct
-{
+typedef struct {
   char data[HEAP_SIZE];
   int size;
 } Heap;
 
-void
-example_sorting(void);
+void example_sorting(void);
 
 #endif

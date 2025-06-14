@@ -4,28 +4,21 @@
 // a sufficiently large prime number
 #define TABLE_SIZE 23021
 
-typedef struct
-{
+typedef struct {
   struct bucket* data[TABLE_SIZE];
 } Dictionary;
 
-struct bucket
-{
+struct bucket {
   char* key;
   int value;
   struct bucket* next;
   struct bucket* prev;
 };
 
-Dictionary*
-dict_init(void);
-struct bucket*
-dict_search(Dictionary*, char*);
-void
-dict_insert(Dictionary*, char*, int);
-void
-dict_delete(Dictionary*, struct bucket*);
-void
-example_dictionary(void);
+Dictionary* dict_init(void);
+struct bucket* dict_search(Dictionary*, char*);
+void dict_insert(Dictionary*, char*, int);
+void dict_delete(Dictionary*, struct bucket*);
+void example_dictionary(void);
 
 #endif

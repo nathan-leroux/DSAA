@@ -8,22 +8,15 @@
 #ifndef STACK_H
 #define STACK_H
 
-typedef struct
-{
+typedef struct {
   Dynarray* data;
 } Stack;
 
-Stack*
-stack_init(void);
-bool
-stack_is_empty(Stack*);
-void
-stack_print(Stack*);
-void
-push(Stack*, char);
-char
-pop(Stack*);
-void
-example_stack(void);
+Stack* stack_init(void);
+bool stack_is_empty(Stack*);
+void stack_print(Stack*);
+void push(Stack*, char);
+char pop(Stack*);
+void example_stack(void);
 
 #endif

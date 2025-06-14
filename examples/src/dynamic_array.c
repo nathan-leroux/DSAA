@@ -15,9 +15,7 @@
  * of elements
  */
 
-void
-dynarray_print(Dynarray* array)
-{
+void dynarray_print(Dynarray* array) {
   printf("[");
 
   for (size_t i = 0; i < array->length; ++i) {
@@ -35,9 +33,7 @@ dynarray_print(Dynarray* array)
   printf("]\n");
 }
 
-void
-dynarray_append(Dynarray* array, char new)
-{
+void dynarray_append(Dynarray* array, char new) {
   if (array->length == array->data_end) {
     char* new_array = calloc(array->length * 2, sizeof(char));
 
@@ -55,9 +51,7 @@ dynarray_append(Dynarray* array, char new)
   array->data_end++;
 }
 
-Dynarray*
-dynarray_init(size_t len)
-{
+Dynarray* dynarray_init(size_t len) {
   Dynarray* new_array = malloc(sizeof(Dynarray));
 
   new_array->length = len;
@@ -67,9 +61,7 @@ dynarray_init(size_t len)
   return new_array;
 }
 
-char
-dynarray_pop(Dynarray* array, size_t index)
-{
+char dynarray_pop(Dynarray* array, size_t index) {
   if (index >= array->data_end) {
     printf("tried to pop with index outside array bounds\n");
     return -1;
@@ -90,9 +82,7 @@ dynarray_pop(Dynarray* array, size_t index)
   return result;
 }
 
-void
-example_dynarray(void)
-{
+void example_dynarray(void) {
   Dynarray* example_array = dynarray_init(2);
   char* string = "dynamic array";
 

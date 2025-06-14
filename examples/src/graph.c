@@ -1,8 +1,6 @@
 #include "graph.h"
 
-Graph*
-init_graph(bool directed)
-{
+Graph* init_graph(bool directed) {
   Graph* g = malloc(sizeof(Graph));
 
   g->nvertices = 0;
@@ -20,11 +18,8 @@ init_graph(bool directed)
   return g;
 }
 
-Search*
-init_search(void (*early)(int, Search*),
-            void (*late)(int, Search*),
-            void (*edge)(int, int, Search*))
-{
+Search* init_search(void (*early)(int, Search*), void (*late)(int, Search*),
+                    void (*edge)(int, int, Search*)) {
   Search* s = malloc(sizeof(Search));
 
   s->stack = stack_init();
@@ -42,14 +37,14 @@ init_search(void (*early)(int, Search*),
   return s;
 }
 
-void
-insert_edge(Graph* g, int x, int y, bool directed)
-{
+void insert_edge(Graph* g, int x, int y, bool directed) {
   Edgenode* edge;
 
   edge = malloc(sizeof(Edgenode));
 
-  edge->weight = 0;
+  // for later
+  // edge->weight = weight;
+  edge->weight = 1;
   edge->y = y;
 
   edge->next = g->edges[x];
@@ -64,9 +59,7 @@ insert_edge(Graph* g, int x, int y, bool directed)
   }
 }
 
-void
-print_graph(Graph* g)
-{
+void print_graph(Graph* g) {
   Edgenode* edge;
 
   for (int i = 1; i <= g->nvertices; ++i) {
@@ -81,9 +74,7 @@ print_graph(Graph* g)
   }
 }
 
-static void
-print_row(int col_space, int* array)
-{
+static void print_row(int col_space, int* array) {
   int digits;
 
   for (int i = 1; i < MAXV; ++i) {
@@ -99,9 +90,7 @@ print_row(int col_space, int* array)
   printf("\n");
 }
 
-void
-print_search(Search* s)
-{
+void print_search(Search* s) {
   int col_space = 3;
 
   printf("node\t");
@@ -117,9 +106,7 @@ print_search(Search* s)
   print_row(col_space, s->exit);
 }
 
-void
-read_graph(char* filename, Graph* g)
-{
+void read_graph(char* filename, Graph* g) {
   int edges_no;
   int x, y;
   int ret;
@@ -148,9 +135,7 @@ read_graph(char* filename, Graph* g)
   fclose(fp);
 }
 
-enum Edge_t
-get_edge_type(int x, int y, Search* s)
-{
+enum Edge_t get_edge_type(int x, int y, Search* s) {
   if (s->parent[y] == x) {
     return TREE;
   }
@@ -170,28 +155,17 @@ get_edge_type(int x, int y, Search* s)
   return -1;
 }
 
-static void
-pass(int n, Search* s)
-{
-}
+static void pass(int n, Search* s) {}
 
-static void
-topo_late(int x, Search* s)
-{
-  push(s->stack, x);
-}
+static void topo_late(int x, Search* s) { push(s->stack, x); }
 
-static void
-topo_edge(int x, int y, Search* s)
-{
+static void topo_edge(int x, int y, Search* s) {
   if (get_edge_type(x, y, s) == BACK) {
     printf("CYCLE FOUND, graph is not a DAG\n");
   }
 }
 
-void
-topo_sort(Graph* g, Search* s)
-{
+void topo_sort(Graph* g, Search* s) {
   for (int i = 1; i <= g->nvertices; ++i) {
     if (!s->discovered[i]) {
       depth_first_search(g, s, i, 0);
@@ -199,21 +173,13 @@ topo_sort(Graph* g, Search* s)
   }
 }
 
-static void
-print_early(int n, Search* s)
-{
-  printf("%d: discovered\n", n);
-}
+static void print_early(int n, Search* s) { printf("%d: discovered\n", n); }
 
-static void
-print_edge(int x, int y, Search* s)
-{
+static void print_edge(int x, int y, Search* s) {
   printf("\tedge: %d %d\n", x, y);
 }
 
-void
-breadth_first_search(Graph* g, Search* s, int start)
-{
+void breadth_first_search(Graph* g, Search* s, int start) {
   int current_node;
   Queue* queue = queue_init();
   Edgenode* edge;
@@ -247,9 +213,7 @@ breadth_first_search(Graph* g, Search* s, int start)
   }
 }
 
-int
-depth_first_search(Graph* g, Search* s, int node, int time)
-{
+int depth_first_search(Graph* g, Search* s, int node, int time) {
   Edgenode* edge;
 
   ++time;
@@ -282,9 +246,7 @@ depth_first_search(Graph* g, Search* s, int node, int time)
   return time;
 }
 
-void
-example_graph(void)
-{
+void example_graph(void) {
   Graph* breadth_g = init_graph(false);
   Graph* topo_g = init_graph(true);
 

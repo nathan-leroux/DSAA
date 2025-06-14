@@ -4,9 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static int
-hash(char* string, int random)
-{
+static int hash(char* string, int random) {
   long hash = 0;
   long constant = 4483;
 
@@ -17,9 +15,7 @@ hash(char* string, int random)
   return (hash % random) % HASHTABLE_SIZE;
 }
 
-static int
-rolling_hash(char* string, int length)
-{
+static int rolling_hash(char* string, int length) {
   if (strlen(string) == 0) {
     return 0;
   }
@@ -44,9 +40,7 @@ rolling_hash(char* string, int length)
   return hash;
 }
 
-static int
-update_hash(int hash, char new, char old, int len)
-{
+static int update_hash(int hash, char new, char old, int len) {
   int constant = 256;
   int modulus = 101;
 
@@ -70,9 +64,7 @@ update_hash(int hash, char new, char old, int len)
   return hash;
 }
 
-int
-explicit_check(char* string, char* substring)
-{
+int explicit_check(char* string, char* substring) {
   for (int i = 0; i < strlen(substring); ++i) {
     if (string[i] != substring[i]) {
       return 0;
@@ -82,9 +74,7 @@ explicit_check(char* string, char* substring)
   return 1;
 }
 
-void
-bitarray_print(Bitarray* array)
-{
+void bitarray_print(Bitarray* array) {
   for (int i = 0; i < array->size; ++i) {
     printf("%d", bitarray_get(array, i));
 
@@ -95,9 +85,7 @@ bitarray_print(Bitarray* array)
   printf("\n");
 }
 
-int
-bitarray_get(Bitarray* array, int index)
-{
+int bitarray_get(Bitarray* array, int index) {
   size_t int_size = sizeof(int) * 8;
   int element = index / int_size;
   int bit = index % int_size;
@@ -105,9 +93,7 @@ bitarray_get(Bitarray* array, int index)
   return (array->array[element] >> bit) & 1;
 }
 
-void
-bitarray_set(Bitarray* array, int index)
-{
+void bitarray_set(Bitarray* array, int index) {
   size_t int_size = sizeof(int) * 8;
   int element = index / int_size;
   int bit = index % int_size;
@@ -119,9 +105,7 @@ bitarray_set(Bitarray* array, int index)
   array->array[element] = array->array[element] | (1 << bit);
 }
 
-Bitarray*
-bitarray_init(int size)
-{
+Bitarray* bitarray_init(int size) {
   Bitarray* new_array = malloc(sizeof(Bitarray));
 
   size_t int_size = sizeof(int) * 8;
@@ -138,9 +122,7 @@ bitarray_init(int size)
   return new_array;
 }
 
-int
-bloom_add(Bitarray* array, int* rn, char* string)
-{
+int bloom_add(Bitarray* array, int* rn, char* string) {
   // define 3 random numbers
   int bucket;
   int new = 0;
@@ -159,9 +141,7 @@ bloom_add(Bitarray* array, int* rn, char* string)
   return new;
 }
 
-int
-rabin_karp(char* string, char* substring)
-{
+int rabin_karp(char* string, char* substring) {
   // hash the substring
   int length = strlen(substring);
   int subhash = rolling_hash(substring, length);
@@ -192,9 +172,7 @@ rabin_karp(char* string, char* substring)
   return -1;
 }
 
-void
-example_hashing(void)
-{
+void example_hashing(void) {
   Bitarray* new = bitarray_init(HASHTABLE_SIZE);
   int randoms[K_SIZE];
 

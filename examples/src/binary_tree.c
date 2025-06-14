@@ -14,9 +14,7 @@
  *
  */
 
-void
-tree_print(struct tree* selected)
-{
+void tree_print(struct tree* selected) {
   if (selected == NULL) {
     return;
   }
@@ -44,9 +42,7 @@ tree_print(struct tree* selected)
   tree_print(selected->right);
 }
 
-struct tree*
-tree_minimum(struct tree* selected)
-{
+struct tree* tree_minimum(struct tree* selected) {
   if (selected == NULL) {
     return NULL;
   }
@@ -58,9 +54,7 @@ tree_minimum(struct tree* selected)
   return tree_minimum(selected->left);
 }
 
-struct tree*
-tree_search(struct tree* btree, int target)
-{
+struct tree* tree_search(struct tree* btree, int target) {
   // target doesn't exist
   if (btree == NULL) {
     return NULL;
@@ -78,9 +72,7 @@ tree_search(struct tree* btree, int target)
   }
 }
 
-void
-tree_delete(struct tree** tree, struct tree* selected)
-{
+void tree_delete(struct tree** tree, struct tree* selected) {
   // find the pointer that links to the parent
   struct tree** parent_ref;
 
@@ -123,9 +115,7 @@ tree_delete(struct tree** tree, struct tree* selected)
   }
 }
 
-void
-tree_insert(struct tree** selected, struct tree* parent, int value)
-{
+void tree_insert(struct tree** selected, struct tree* parent, int value) {
   if (*selected == NULL) {
     struct tree* new_node = malloc(sizeof(struct tree));
 
@@ -149,9 +139,7 @@ tree_insert(struct tree** selected, struct tree* parent, int value)
   tree_insert(next_node, *selected, value);
 }
 
-void
-example_binary_tree(void)
-{
+void example_binary_tree(void) {
   struct tree* btree = NULL;
   struct tree* selected;
 

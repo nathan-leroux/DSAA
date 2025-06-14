@@ -15,9 +15,7 @@
  *
  */
 
-Pqueue*
-pq_init(void)
-{
+Pqueue* pq_init(void) {
   Pqueue* new_pqueue = malloc(sizeof(Pqueue));
 
   new_pqueue->data = NULL;
@@ -25,15 +23,11 @@ pq_init(void)
   return new_pqueue;
 }
 
-void
-pq_insert(Pqueue* queue, int input)
-{
+void pq_insert(Pqueue* queue, int input) {
   tree_insert(&queue->data, NULL, input);
 }
 
-int
-pq_get_minimum(Pqueue* queue)
-{
+int pq_get_minimum(Pqueue* queue) {
   int result;
 
   struct tree* result_node = tree_minimum(queue->data);
@@ -43,9 +37,7 @@ pq_get_minimum(Pqueue* queue)
   return result;
 }
 
-void
-example_priority_queue(void)
-{
+void example_priority_queue(void) {
   printf("## Priority Queue example\n");
   printf("##\n");
   printf("## inserting values into queue\n");

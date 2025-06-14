@@ -9,9 +9,7 @@
 #include "sorting.h"
 #include "stack.h"
 
-int
-main(void)
-{
+int main(void) {
   // example_dynarray();
   // printf("\n\n");
   // example_linked_list();
@@ -30,6 +28,7 @@ main(void)
   // printf("\n\n");
   // example_hashing();
   // printf("\n\n");
-  example_graph();
+  // example_graph();
+  printf("\nYEEHAW\n");
   return 0;
 }

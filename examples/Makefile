@@ -9,41 +9,30 @@ INC_DIR:= include
 BIN_DIR:= bin
 BUILD_DIR:= build
 
-OBJS:= $(patsubst $(SRC_DIR)/%.c,%.o, $(wildcard $(SRC_DIR)/*.c))
-APP:= examples.out
-# finds all the source code and creates objects for it
-# $(patsubst) - substitutes all .c to .o paths
-# $(wildcard) - returns all files matched with the glob '*' wildcard
-
+SRC_FILES:= $(wildcard $(SRC_DIR)/*.c)
+H_FILES:= $(wildcard $(INC_DIR)/*.h)
+OBJS:= $(filter-out %main.o,$(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRC_FILES)))
+APP:= $(BIN_DIR)/examples.out
 
 run: $(APP)
-	@echo "\n## Running\n"
-	@$(BIN_DIR)/$(APP)
-# placing @ at the start of a command suppresses output before execution
+	@echo "## Running"
+	$(APP)
 
 $(APP): $(OBJS) 
-	@echo "\n## Making Binary\n"
-	$(CC) $(LFLAGS) $(CFLAGS) $(OBJS:%.o=$(BUILD_DIR)/%.o) -o $(BIN_DIR)/$@ 
-# $^ - all prerequisites
-# $@ - target name
+	@echo "## Making Binary"
+	$(CC) $(LFLAGS) $(CFLAGS) $(SRC_DIR)/main.c $(OBJS) -o $@ 
 
+$(OBJS): $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/%.h 
+	@mkdir -p $(BUILD_DIR) $(BIN_DIR)
+	@$(FORMATTER) -style=google -i $<
+	@$(FORMATTER) -style=google -i $(INC_DIR)/$(*F).h
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# objs don't update with header changes
-$(OBJS): dir
-	$(CC) $(CFLAGS) -c $(SRC_DIR)/$*.c -o $(BUILD_DIR)/$@
-
-# currently not used
 lint:
-	@$(LINTER) --format-style=llvm $(SRC_DIR)/* $(INC_DIR)/* -- $(CFLAGS)
+	@$(LINTER) --format-style=google $(SRC_DIR)/* $(INC_DIR)/* -- $(CFLAGS)
 
 format:
-	@$(FORMATTER) -style=mozilla -i $(SRC_DIR)/* $(INC_DIR)/*
-
-dir:
-	@mkdir -p $(BUILD_DIR) $(BIN_DIR)
-
-test:
-	@echo $(OBJS)
+	@$(FORMATTER) -style=google -i $(SRC_FILES) $(H_FILES)
 
 clean:
 	@rm -r $(BUILD_DIR) $(BIN_DIR)
@@ -51,5 +40,4 @@ clean:
 bear:
 	bear -- make $(APP)
 
-
-.PHONY: lint format dir clean run bear test
+.PHONY: lint format clean run bear 

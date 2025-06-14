@@ -15,9 +15,7 @@
  *
  */
 
-void
-list_print(struct linked_list* list)
-{
+void list_print(struct linked_list* list) {
   printf("[");
 
   while (list != NULL) {
@@ -33,15 +31,9 @@ list_print(struct linked_list* list)
   printf("]\n");
 }
 
-struct linked_list*
-list_init(void)
-{
-  return NULL;
-}
+struct linked_list* list_init(void) { return NULL; }
 
-struct linked_list*
-list_create(void)
-{
+struct linked_list* list_create(void) {
   struct linked_list* new_list = malloc(sizeof(struct linked_list));
 
   new_list->prev = NULL;
@@ -51,9 +43,7 @@ list_create(void)
   return new_list;
 }
 
-char
-list_pop(struct linked_list** head, struct linked_list* node)
-{
+char list_pop(struct linked_list** head, struct linked_list* node) {
   if (node->prev != NULL) {
     node->prev->next = node->next;
   }
@@ -76,9 +66,7 @@ list_pop(struct linked_list** head, struct linked_list* node)
 }
 
 // appends at the head
-void
-list_append(struct linked_list** list_p, char value)
-{
+void list_append(struct linked_list** list_p, char value) {
   struct linked_list* new_list = list_create();
   struct linked_list* old_list = *list_p;
 
@@ -92,9 +80,7 @@ list_append(struct linked_list** list_p, char value)
   *list_p = new_list;
 }
 
-struct linked_list*
-list_tail(struct linked_list* list)
-{
+struct linked_list* list_tail(struct linked_list* list) {
   while (list->next != NULL) {
     list = list->next;
   }
@@ -102,9 +88,7 @@ list_tail(struct linked_list* list)
   return list;
 }
 
-void
-example_linked_list(void)
-{
+void example_linked_list(void) {
   // ensure i would be able to make a stack and a queue with this
   struct linked_list* list = list_init();
   char* string = "linked list";

@@ -12,24 +12,16 @@
  *
  */
 
-Stack*
-stack_init(void)
-{
+Stack* stack_init(void) {
   Stack* new_stack = malloc(sizeof(Stack));
   new_stack->data = dynarray_init(2);
 
   return new_stack;
 }
 
-bool
-stack_is_empty(Stack* s)
-{
-  return s->data->data_end == 0;
-}
+bool stack_is_empty(Stack* s) { return s->data->data_end == 0; }
 
-void
-stack_print(Stack* s)
-{
+void stack_print(Stack* s) {
   printf("[");
   if (!stack_is_empty(s)) {
     printf("%d", pop(s));
@@ -41,23 +33,15 @@ stack_print(Stack* s)
   printf("]\n");
 }
 
-void
-push(Stack* stack, char input)
-{
-  dynarray_append(stack->data, input);
-}
+void push(Stack* stack, char input) { dynarray_append(stack->data, input); }
 
-char
-pop(Stack* stack)
-{
+char pop(Stack* stack) {
   Dynarray* array = stack->data;
 
   return dynarray_pop(array, array->data_end - 1);
 }
 
-void
-example_stack(void)
-{
+void example_stack(void) {
   Stack* stack = stack_init();
   char* string = "abc";
 
