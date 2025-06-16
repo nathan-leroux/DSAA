@@ -1,13 +1,14 @@
 #include "binary_tree.h"
 #include "dictionary.h"
 #include "dynamic_array.h"
-#include "graph.h"
 #include "hashing.h"
 #include "linked_list.h"
 #include "priority_queue.h"
 #include "queue.h"
 #include "sorting.h"
 #include "stack.h"
+#include "graph.h"
+#include "weighted_graph.h"
 
 int main(void) {
   // example_dynarray();
@@ -29,6 +30,8 @@ int main(void) {
   // example_hashing();
   // printf("\n\n");
   // example_graph();
-  printf("\nYEEHAW\n");
+  // printf("\n\n");
+  example_weighted_graph();
+
   return 0;
 }

@@ -37,7 +37,7 @@ Search* init_search(void (*early)(int, Search*), void (*late)(int, Search*),
   return s;
 }
 
-void insert_edge(Graph* g, int x, int y, bool directed) {
+void insert_edge(Graph* g, int x, int y, int weight, bool directed) {
   Edgenode* edge;
 
   edge = malloc(sizeof(Edgenode));
@@ -53,7 +53,7 @@ void insert_edge(Graph* g, int x, int y, bool directed) {
 
   // if undirected, add the same edge in the other direction
   if (!directed) {
-    insert_edge(g, y, x, true);
+    insert_edge(g, y, x, weight, true);
   } else {
     g->nedges++;
   }
@@ -106,9 +106,12 @@ void print_search(Search* s) {
   print_row(col_space, s->exit);
 }
 
-void read_graph(char* filename, Graph* g) {
+void read_graph(char* filename, Graph* g, bool weighted) {
+  char* file_format;
+  int file_args;
   int edges_no;
   int x, y;
+  int weight = 1;
   int ret;
 
   FILE* fp = fopen(filename, "r");
@@ -122,14 +125,22 @@ void read_graph(char* filename, Graph* g) {
     exit(EXIT_FAILURE);
   }
 
+  if (weighted) {
+    file_format = "%d %d %d";
+    file_args = 3;
+  } else {
+    file_format = "%d %d";
+    file_args = 2;
+  }
+
   for (int i = 1; i <= edges_no; ++i) {
-    ret = fscanf(fp, "%d %d", &x, &y);
-    if (ret != 2) {
+    ret = fscanf(fp, file_format, &x, &y, &weight);
+    if (ret != file_args) {
       printf("couldn't read edge %d\n", i);
       exit(EXIT_FAILURE);
     }
 
-    insert_edge(g, x, y, g->directed);
+    insert_edge(g, x, y, weight, g->directed);
   }
 
   fclose(fp);
@@ -254,14 +265,14 @@ void example_graph(void) {
   Search* topo_s = init_search(&pass, &topo_late, &topo_edge);
 
   printf("Breadth First Search\n");
-  read_graph(GRAPH_FILE, breadth_g);
+  read_graph(GRAPH_FILE, breadth_g, false);
   breadth_first_search(breadth_g, breadth_s, 1);
   print_graph(breadth_g);
   print_search(breadth_s);
 
   printf("\n");
   printf("Topological Sort\n");
-  read_graph(GRAPH_FILE, topo_g);
+  read_graph(GRAPH_FILE, topo_g, false);
   print_graph(topo_g);
   topo_sort(topo_g, topo_s);
   stack_print(topo_s->stack);

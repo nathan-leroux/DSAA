@@ -3,4 +3,8 @@
 
 #include "graph.h"
 
+#define W_GRAPH_FILE "weighted.txt"
+
+void example_weighted_graph(void);
+
 #endif
