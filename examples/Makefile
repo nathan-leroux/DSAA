@@ -24,8 +24,6 @@ $(APP): $(OBJS)
 
 $(OBJS): $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/%.h 
 	@mkdir -p $(BUILD_DIR) $(BIN_DIR)
-	@$(FORMATTER) -style=google -i $<
-	@$(FORMATTER) -style=google -i $(INC_DIR)/$(*F).h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 lint:
