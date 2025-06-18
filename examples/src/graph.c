@@ -42,9 +42,7 @@ void insert_edge(Graph* g, int x, int y, int weight, bool directed) {
 
   edge = malloc(sizeof(Edgenode));
 
-  // for later
-  // edge->weight = weight;
-  edge->weight = 1;
+  edge->weight = weight;
   edge->y = y;
 
   edge->next = g->edges[x];
@@ -67,7 +65,7 @@ void print_graph(Graph* g) {
     edge = g->edges[i];
 
     while (edge != NULL) {
-      printf(" %d", edge->y);
+      printf(" %d(%d)", edge->y, edge->weight);
       edge = edge->next;
     }
     printf("\n");

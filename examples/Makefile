@@ -16,7 +16,7 @@ APP:= $(BIN_DIR)/examples.out
 
 run: $(APP)
 	@echo "## Running"
-	$(APP)
+	@$(APP)
 
 $(APP): $(OBJS) 
 	@echo "## Making Binary"

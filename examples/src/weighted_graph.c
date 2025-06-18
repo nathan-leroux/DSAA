@@ -1,34 +1,29 @@
 #include "weighted_graph.h"
 
-Graph* prims(Graph* g, int start) {
-  Graph* spanning_tree = init_graph(false);
-  Edgenode* min_node;
-  int distance[MAXV+1];
-  bool added[MAXV+1];
+SpanningTree* init_spantree(void) {
+  return NULL;
+}
 
-  // TODO keep track of smallest edge to add
+// return min edge that hasn't been added yet
+Edgenode* return_min_edge(SpanningTree* st) {
+  return NULL;
+}
 
-  // find all available edges from this point
-  for (Edgenode* i=g->edges[start]; i!=NULL; i=i->next) {
-    distance[i->y] = i->weight;
-    if (i->weight < ) {
-      min = i->weight;
-    }
-  }
+// add a discovered edge to the datastructure for consideration
+void add_possible_edge(SpanningTree* st, Edgenode* edge) {
+}
 
+Graph* prims(Graph* g, int current) {
+  return NULL;
+}
 
-
-  // pick smallest and add
-  // update available edges from the new vertex added
-  // repeat
-  return spanning_tree;
+Graph* kruskals(Graph* g) {
+  return NULL;
 }
 
 void example_weighted_graph(void) {
   Graph* g = init_graph(false);
   read_graph(W_GRAPH_FILE, g, true);
-
-  print_graph(g);
 
   Graph* spanning_tree = prims(g, 1);
   print_graph(spanning_tree);

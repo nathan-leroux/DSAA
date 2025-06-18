@@ -49,6 +49,7 @@ typedef struct Search {
 Search* init_search(void(int, Search*), void(int, Search*),
                     void(int, int, Search*));
 Graph* init_graph(bool);
+void insert_edge(Graph*, int, int, int, bool);
 void read_graph(char*, Graph*, bool);
 void print_graph(Graph* g);
 void breadth_first_search(Graph*, Search*, int);
