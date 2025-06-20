@@ -2,10 +2,10 @@
 #define WEIGHTED_GRAPH_H
 
 #include "graph.h"
+#include "union_find.h"
 
 #define W_GRAPH_FILE "weighted.txt"
 
-void example_weighted_graph(void);
 
 typedef struct {
   Edgenode* cost[MAXV+1];
@@ -22,7 +22,9 @@ int min_cost_vertex(SpanSearch* st);
 void add_edge(SpanSearch* st, int parent, Edgenode* edge);
 
 Graph* prims(Graph* g, SpanSearch* st, int start);
-Graph* kruskals(Graph* g);
+Graph* kruskals(Graph* g, SpanSearch* st);
 Graph* dijkstras(Graph* g, int start, int end);
+
+void example_weighted_graph(void);
 
 #endif

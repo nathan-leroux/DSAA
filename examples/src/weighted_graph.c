@@ -33,7 +33,8 @@ int min_cost_vertex(SpanSearch* st) {
     }
   }
 
-  st->added[min_vertex] = true;
+  // changed to allow kruskals to work with this func
+  // st->added[min_vertex] = true;
   return min_vertex;
 }
 
@@ -77,6 +78,7 @@ Graph* prims(Graph* g, SpanSearch* st, int start) {
 
   // pick the cheapest vertex and add
   int cheapest = min_cost_vertex(st);
+  st->added[cheapest] = true;
   printf("cheapest: %d\n", cheapest);
 
   while (cheapest != 0) {
@@ -88,13 +90,14 @@ Graph* prims(Graph* g, SpanSearch* st, int start) {
     }
 
     cheapest = min_cost_vertex(st);
+    st->added[cheapest] = true;
     printf("cheapest: %d\n", cheapest);
   }
     
   return span;
 }
 
-Graph* kruskals(Graph* g) {
+Graph* kruskals(Graph* g, SpanSearch* st) {
   return NULL;
 }
 
@@ -104,6 +107,7 @@ void example_weighted_graph(void) {
 
   SpanSearch* st = init_spansearch(g->nvertices);
 
-  Graph* spanning_tree = prims(g, st, 1);
+  // Graph* spanning_tree = prims(g, st, 1);
+  Graph* spanning_tree = kruskals(g, st);
   print_graph(spanning_tree);
 }
