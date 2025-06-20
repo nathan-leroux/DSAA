@@ -8,16 +8,20 @@
 void example_weighted_graph(void);
 
 typedef struct {
-  Graph* g;
-  Edgenode* edges[MAXV+1];
+  Edgenode* cost[MAXV+1];
+  int parent[MAXV+1];
   bool added[MAXV+1];
-} SpanningTree;
+  int nvertices;
+} SpanSearch;
 
 // typedef struct {
 // } UnionSet;
 
-SpanningTree* init_spantree(void);
-Graph* prims(Graph* g, int current);
+SpanSearch* init_spansearch(int nvertices);
+int min_cost_vertex(SpanSearch* st);
+void add_edge(SpanSearch* st, int parent, Edgenode* edge);
+
+Graph* prims(Graph* g, SpanSearch* st, int start);
 Graph* kruskals(Graph* g);
 Graph* dijkstras(Graph* g, int start, int end);
 

@@ -15,10 +15,12 @@ OBJS:= $(filter-out %main.o,$(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRC_F
 APP:= $(BIN_DIR)/examples.out
 
 run: $(APP)
+	@echo
 	@echo "## Running"
 	@$(APP)
 
 $(APP): $(OBJS) 
+	@echo
 	@echo "## Making Binary"
 	$(CC) $(LFLAGS) $(CFLAGS) $(SRC_DIR)/main.c $(OBJS) -o $@ 
 
