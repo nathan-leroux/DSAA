@@ -16,5 +16,6 @@ typedef struct {
 UnionFind* init_union_find(int size);
 int find_uf(UnionFind* uf, int element);
 void merge_uf(UnionFind* uf, int x, int y);
+void print_uf(UnionFind* uf);
 
 #endif

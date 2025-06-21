@@ -10,8 +10,10 @@
 #include "stack.h"
 
 #define MAXV 10
+#define MAXEDGE 30
 #define MAXWEIGHT 1000
 #define GRAPH_FILE "dag.txt"
+#define W_GRAPH_FILE "weighted.txt"
 
 enum Edge_t {
   TREE,
@@ -20,14 +22,15 @@ enum Edge_t {
   CROSS,
 };
 
-typedef struct Edgenode {
+typedef struct Edge {
+  int x;
   int y;
   int weight;
-  struct Edgenode* next;
-} Edgenode;
+  struct Edge* next;
+} Edge;
 
 typedef struct {
-  Edgenode* edges[MAXV + 1];
+  Edge* edges[MAXV + 1];
   int degree[MAXV + 1];
   int nvertices;
   int nedges;
@@ -48,7 +51,7 @@ typedef struct Search {
 
 Search* init_search(void(int, Search*), void(int, Search*),
                     void(int, int, Search*));
-Graph* init_graph(bool);
+Graph* init_graph(bool directed);
 void insert_edge(Graph*, int, int, int, bool);
 void read_graph(char*, Graph*, bool);
 void print_graph(Graph* g);

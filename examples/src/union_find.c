@@ -31,10 +31,30 @@ void merge_uf(UnionFind* uf, int x, int y) {
 
   if (uf->size[root_x] >= uf->size[root_y]) {
     uf->root[root_y] = root_x;
-    uf->size[root_x] += root_y;
+    uf->size[root_x] += uf->size[root_y];
   }
   else {
     uf->root[root_x] = root_y;
-    uf->size[root_y] += root_x;
+    uf->size[root_y] += uf->size[root_x];
   }
+}
+
+void print_uf(UnionFind* uf) {
+  printf("index: ");
+  for (int i=1; i<=uf->set_size; ++i) {
+    printf("%d ", i);
+  }
+  printf("\n");
+
+  printf("root:  ");
+  for (int i=1; i<=uf->set_size; ++i) {
+    printf("%d ", uf->root[i]);
+  }
+  printf("\n");
+
+  printf("size:  ");
+  for (int i=1; i<=uf->set_size; ++i) {
+    printf("%d ", uf->size[i]);
+  }
+  printf("\n");
 }

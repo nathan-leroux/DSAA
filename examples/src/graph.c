@@ -38,11 +38,12 @@ Search* init_search(void (*early)(int, Search*), void (*late)(int, Search*),
 }
 
 void insert_edge(Graph* g, int x, int y, int weight, bool directed) {
-  Edgenode* edge;
+  Edge* edge;
 
-  edge = malloc(sizeof(Edgenode));
+  edge = malloc(sizeof(Edge));
 
   edge->weight = weight;
+  edge->x = x;
   edge->y = y;
 
   edge->next = g->edges[x];
@@ -58,7 +59,7 @@ void insert_edge(Graph* g, int x, int y, int weight, bool directed) {
 }
 
 void print_graph(Graph* g) {
-  Edgenode* edge;
+  Edge* edge;
 
   for (int i = 1; i <= g->nvertices; ++i) {
     printf("%d: ", i);
@@ -191,7 +192,7 @@ static void print_edge(int x, int y, Search* s) {
 void breadth_first_search(Graph* g, Search* s, int start) {
   int current_node;
   Queue* queue = queue_init();
-  Edgenode* edge;
+  Edge* edge;
 
   s->discovered[start] = true;
 
@@ -223,7 +224,7 @@ void breadth_first_search(Graph* g, Search* s, int start) {
 }
 
 int depth_first_search(Graph* g, Search* s, int node, int time) {
-  Edgenode* edge;
+  Edge* edge;
 
   ++time;
   s->entry[node] = time;

@@ -1,6 +1,7 @@
 # binaries
 *.pdf
 zoom_lectures/
+CHECKLIST.txt
 
 # Prerequisites
 *.d
