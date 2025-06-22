@@ -4,6 +4,7 @@
 #include "union_find.h"
 #include "prims.h"
 #include "kruskals.h"
+#include "dijkstras.h"
 
 void example_weighted_graph(void);
 

@@ -165,6 +165,61 @@ enum Edge_t get_edge_type(int x, int y, Search* s) {
   return -1;
 }
 
+EdgePQ* init_edge_pq(void) {
+  EdgePQ* new_pq = malloc(sizeof(EdgePQ));
+
+  for (int i=0; i<MAXEDGE; ++i) {
+    new_pq->edges[i] = NULL;
+  }
+  new_pq->nedges = 0;
+  new_pq->min_index = -1;
+
+  return new_pq;
+}
+
+
+void add_edge(EdgePQ* pq, Edge* edge) {
+  int added_index = pq->nedges;
+
+  if (pq->nedges >= MAXEDGE) {
+    printf("Maximum edges reached! better adjust the constant\n");
+    exit(EXIT_FAILURE);
+  }
+
+  pq->edges[added_index] = edge;
+  ++pq->nedges;
+
+  if (pq->min_index == -1 || pq->edges[pq->min_index]->weight > edge->weight) {
+    pq->min_index = added_index;
+  }
+}
+
+Edge* min_edge(EdgePQ* pq) {
+  // return edge from min_index
+  Edge* result = pq->edges[pq->min_index];
+
+  // reshuffle from that index
+  for (int i=pq->min_index; i<pq->nedges-1; ++i) {
+    pq->edges[i] = pq->edges[i+1];
+    pq->edges[i+1] = NULL;
+  }
+  --pq->nedges;
+
+  // reset the minimum edge
+  pq->min_index = -1;
+  for (int i=0; i<pq->nedges; ++i) {
+    if (pq->min_index == -1) {
+      pq->min_index = i;
+    }
+
+    if (pq->edges[pq->min_index]->weight > pq->edges[i]->weight) {
+      pq->min_index = i;
+    }
+  }
+
+  return result;
+}
+
 static void pass(int n, Search* s) {}
 
 static void topo_late(int x, Search* s) { push(s->stack, x); }

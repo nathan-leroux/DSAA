@@ -30,6 +30,12 @@ typedef struct Edge {
 } Edge;
 
 typedef struct {
+  Edge* edges[MAXEDGE];
+  int nedges;
+  int min_index;
+} EdgePQ;
+
+typedef struct {
   Edge* edges[MAXV + 1];
   int degree[MAXV + 1];
   int nvertices;
@@ -55,6 +61,11 @@ Graph* init_graph(bool directed);
 void insert_edge(Graph*, int, int, int, bool);
 void read_graph(char*, Graph*, bool);
 void print_graph(Graph* g);
+
+EdgePQ* init_edge_pq(void);
+void add_edge(EdgePQ* pq, Edge* edge);
+Edge* min_edge(EdgePQ* pq);
+
 void breadth_first_search(Graph*, Search*, int);
 int depth_first_search(Graph*, Search*, int, int);
 

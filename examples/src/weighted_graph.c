@@ -12,13 +12,15 @@ void example_weighted_graph(void) {
   Graph* g = init_graph(false);
   read_graph(W_GRAPH_FILE, g, true);
 
-  Graph* prims_tree = prims(g, 1);
-
   printf("\n## PRIMS\n");
+  Graph* prims_tree = prims(g, 1);
   print_graph(prims_tree);
 
-  Graph* kruskals_tree = kruskals(g);
-
   printf("\n## KRUSKALS\n");
+  Graph* kruskals_tree = kruskals(g);
   print_graph(kruskals_tree);
+
+  printf("\n## DIJKSTRAS\n");
+  Graph* dijkstras_path = dijkstras(g, 7, 2);
+  print_graph(dijkstras_path);
 }
