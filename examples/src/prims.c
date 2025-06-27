@@ -33,7 +33,7 @@ static int min_cost_vertex(PrimsSearch* st) {
   return min_vertex;
 }
 
-static void add_edge(PrimsSearch* st, Edge* edge) {
+static void add_span_edge(PrimsSearch* st, Edge* edge) {
   if (edge->y > st->nvertices) {
     printf("vertex %d added to search, thought only %d existed\n", edge->y, st->nvertices);
     exit(EXIT_FAILURE);
@@ -67,7 +67,7 @@ Graph* prims(Graph* g, int start) {
 
   // for all start edges, add
   for (i=g->edges[start]; i!=NULL; i=i->next) {
-    add_edge(st, i);
+    add_span_edge(st, i);
   }
 
   // pick the cheapest vertex and add
@@ -80,7 +80,7 @@ Graph* prims(Graph* g, int start) {
 
     // explore all the new edges from the cheapest vertex
     for (i=g->edges[cheapest]; i!=NULL; i=i->next) {
-      add_edge(st, i);
+      add_span_edge(st, i);
     }
 
     cheapest = min_cost_vertex(st);
