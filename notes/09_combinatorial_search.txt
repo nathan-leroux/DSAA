@@ -1,0 +1,113 @@
+Combinatorial Search
+   
+   Sometimes solving problems by exhaustively searching all possibilities is worthwhile.
+   The Guarantee of correctness by testing all possible inputs is much more valuable than only some.
+   However, factorials get slow really quickly, anything north of 10 gets real slow.
+   For this reason, trimming possible combinations that are uninteresting to the given problem is a useful technique.
+
+
+   9.1 Backtracking
+
+      Backtracking is a systematic way of enumerating through all possibilities for a given problem exactly once
+      It involves creating a tree of partial solutions.
+      With each partial solution, test if it is a complete solution, if not calculate possible values to extend the partial
+      the width of the tree expands exponentially compared to the height so breadth first is not a good idea.
+      The partial solutions are expanded in a depth first way
+      once no more possible extensions exist for a given partial solution, the algorithm 'backtracks' to a previous partial.
+      Bookkeeping needs to be done to know what the previous partial solutions were (recursion is good for this)
+
+      Common problems where back tracking can be used are
+         - finding permutation
+         - finding subsets
+         - enumerating spanning trees
+         - all possible colourings of graphs
+
+
+   9.2 Examples of Backtracking
+      
+      All subsets is done by considering whether an element of the set is 'in' or 'out'.
+      Gives two possible candidates per each n, useful to consider the result as a boolean vector
+
+      All permutations needs to consider the values already in the partial solution as no duplicates
+      the candidate values for extending the partial are all values no currently in the partial solution.
+
+      Constructing all paths in a graph requires the context of the graph, start vertex and end vertex
+      first candidate is always the start, and last is the end
+      possible candidate vertices at other points consist of vertices connected to the most recent, but not already in the solution
+
+
+   9.3 Search Pruning
+
+      Backtracking ensures correctness by enumerating all search possibilities,
+      However not all possibilities are valid given the problems constraints
+      Search Pruning means backtracking immediately when there are no longer candidate values that lead to valid solutions.
+      Doing so prevents wasting computation on solutions that are already known not to contribute to a solution.
+      Many subtle forms of pruning exist,
+      Such as discarding paths after the weight exceeds that of a previously found solution, Or symmetry in a closed loop problem.
+
+
+   9.4 Sudoku
+      
+      Great example to demonstrate backtracking and search pruning
+      official Sudoku puzzles have only one possible answer, simplifying the result
+
+      Use two data structures to keep track of info
+         - One for the values in the grid
+         - One for tracking the moves made to enable backtracking
+      Constructing candidates is done by choosing a square to fill next and determining what possible values can legally fit there
+      Recursively, moves can be made and unmade (using the move array)
+      Search is exited by when no more unfilled cells exist
+
+      The choice of what is the next square to fill has great impact on performance
+      'Arbitrary selection' whether next, last or random, same performance
+      'Most constrained' great performance improvement as less possible candidates need to be explored to get a match
+      Although more time is spent searching for a candidate square, this performance is made up for by a magnitude saved calculation
+
+      Choosing possible values can also be done in different ways
+      'Local count' candidates are what numbers don't appear in the given row/col/box
+      'Look ahead' checks if other squares in the partial solution have no candidates, if so backtrack
+      Successful pruning requires looking ahead to see when the partial is doomed and backtracking ASAP
+
+
+   9.6 Best-First Search
+
+      Existential search problems search for possible solutions given the constraints
+      an example is Sudoku
+      Optimization problems seek to find the best solution by maxing some given function
+      such as the Travelling Salesman Problem
+      An important idea to speed up searches is to order the results from construct_candidates()
+      So that the most promising candidates are explored first
+      Best first search assigns a cost to every partial solution found based on which partial is the most promising
+      As soon as the cost of a partial exceeds the best found solution, it is pruned.
+
+
+   9.7 A* Heuristic
+      
+      Problem with the Best-First search is that that it will unnecessarily expand bad partial solutions with few n.
+      This is because the cost of partials with small n will likely always be smaller than the optimal (with all n).
+      The A* heuristic is an improvement on the best-first that avoids this.
+      While the total cost of the current solution is taken into account just like the Best-First,
+      A* includes the edge lower bound (smallest edge weight) * remaining edges to pick the most promising candidate
+      This prioritises good partials that are close to completion over bad partials that have just started.
+
+      Another reason why A* is better than Best-First is Best-First tends to work like a Breadth-First Search
+      This means that a huge number of partials are tracked due to expanding width over depth (where width expands exponentially with higher n)
+      A* expands less smaller partials, making it less likely to run out of memory deeper in the search
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
