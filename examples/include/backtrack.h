@@ -3,11 +3,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+
 
 #define INPUT_FILE "sudoku_board.txt"
 
 #define DIMENSION 9
 #define NCELLS DIMENSION * DIMENSION
+#define MCANDIDATES 9
 
 typedef struct {
   int x;
@@ -16,7 +19,7 @@ typedef struct {
 
 typedef struct {
   int grid[DIMENSION+1][DIMENSION+1];
-  int blanks;
+  int filled;
   Point moves[NCELLS+1];
 } Board;
 

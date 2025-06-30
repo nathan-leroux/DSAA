@@ -93,21 +93,3 @@ Combinatorial Search
       Another reason why A* is better than Best-First is Best-First tends to work like a Breadth-First Search
       This means that a huge number of partials are tracked due to expanding width over depth (where width expands exponentially with higher n)
       A* expands less smaller partials, making it less likely to run out of memory deeper in the search
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
