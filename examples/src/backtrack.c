@@ -187,6 +187,37 @@ static void possible_values(Point p, Board* b, int possible[], int* npossible) {
   }
 }
 
+Point next_square_restricted(Board* b) {
+  Point best_point = {0,0};
+  Point current_point;
+  int possible[MCANDIDATES+1];
+  int least_options = MCANDIDATES;
+  int current;
+
+  for (int y=1; y<=DIMENSION; ++y) {
+    for (int x=1; x<=DIMENSION; ++x) {
+      current = 0;
+      current_point = (Point){x,y};
+      if (get_board(current_point, b) != 0) {
+        continue;
+      }
+
+      possible_values(current_point, b, possible, &current);
+      if (current < least_options) {
+        best_point = current_point;
+        least_options = current;
+      }
+    }
+  }
+
+  if (best_point.x == 0 || best_point.y == 0) {
+    printf("couldn't find a point, is search already complete?\n");
+    exit(EXIT_FAILURE);
+  }
+
+  return best_point;
+}
+
 Point next_square_simple(Board* b) {
   int value;
   Point p;
@@ -205,7 +236,7 @@ Point next_square_simple(Board* b) {
   exit(EXIT_FAILURE);
 }
 
-void backtrack(Board* board, int* calls) {
+void backtrack(Board* board, int* calls, bool simple_search) {
   ++(*calls);
 
   if (is_complete(board)) {
@@ -214,13 +245,20 @@ void backtrack(Board* board, int* calls) {
 
   int candidates[MCANDIDATES+1]; 
   int nc = 0;
+  Point next_point;
 
-  Point next_point = next_square_simple(board);
+  if (simple_search) {
+    next_point = next_square_simple(board);
+  }
+  else {
+    next_point = next_square_restricted(board);
+  }
+
   possible_values(next_point, board, candidates, &nc);
 
   for (int i=0; i<nc; ++i) {
     make_move(next_point, board, candidates[i]);
-    backtrack(board, calls);
+    backtrack(board, calls, simple_search);
     if (is_complete(board)) {
       return;
     }
@@ -233,10 +271,19 @@ void example_backtrack(void) {
   int calls = 0;
 
   Board* b = init_board(INPUT_FILE);
+  printf("\n### without candidate prioritisation\n");
   print_board(b);
 
-  backtrack(b, &calls);
+  backtrack(b, &calls, true);
+  print_board(b);
+  printf("total backtrack calls: %d\n", calls);
 
+  b = init_board(INPUT_FILE);
+  calls = 0;
+  printf("\n### with candidate prioritisation\n");
+
+  print_board(b);
+  backtrack(b, &calls, false);
   print_board(b);
   printf("total backtrack calls: %d\n", calls);
 }
