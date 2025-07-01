@@ -29,35 +29,51 @@ void del_board(Point p, Board* b) {
   }
 }
 
+void make_move(Point p, Board* b, int value) {
+  set_board(p, b, value);
+  b->moves[b->move_count] = p;
+  ++b->move_count;
+}
+
+void unmake_move(Point p, Board* b) {
+  --b->move_count;
+  b->moves[b->move_count] = (Point){0,0};
+  del_board(p, b);
+}
+
+
 static void print_board(Board* b) {
   int value;
+  Point p;
 
-  for (int i=1; i<=DIMENSION; ++i) {
-    for (int j=1; j<=DIMENSION; ++j) {
-      value = b->grid[j][i];
+  for (int y=1; y<=DIMENSION; ++y) {
+    for (int x=1; x<=DIMENSION; ++x) {
+      p = (Point){x,y};
+      value = get_board(p, b);
       if (value == 0) {
         printf("_ ");
       }
       else {
         printf("%d ", value);
       }
-      if (j%3 == 0) {
+      if (x%3 == 0) {
         printf("  ");
       }
     }
     printf("\n");
-    if (i%3 == 0) {
+    if (y%3 == 0) {
       printf("\n");
     }
   }
-  printf("found: %d\n", NCELLS - b->filled);
-  printf("blank: %d\n", b->filled);
+  printf("blank: %d\n", NCELLS - b->filled);
+  printf("found: %d\n", b->filled);
 }
 
 static Board* init_board(char* filename) {
   Board* new_board = malloc(sizeof(Board));
 
   new_board->filled = 0;
+  new_board->move_count = 0;
   for (int i=0; i<=NCELLS; ++i) {
     new_board->moves[i].x = 0;
     new_board->moves[i].y = 0;
@@ -115,7 +131,7 @@ static void get_box(Point p, Point set[]) {
   int i=1;
   for (int j=centre_point.x-1; j<=centre_point.x+1; ++j) {
     for (int k=centre_point.y-1; k<=centre_point.y+1; ++k) {
-      set[i] = (Point){k, j};
+      set[i] = (Point){j, k};
       ++i;
     }
   }
@@ -127,19 +143,19 @@ static void get_box(Point p, Point set[]) {
 // }
 //
 static bool is_complete(Board* b) {
-  if (b->filled < 0) {
-    printf("blanks has negitive value somehow\n");
+  if (b->filled > NCELLS) {
+    printf("filled more than the max cells somehow\n");
     exit(EXIT_FAILURE);
   }
 
-  return b->filled == 0;
+  return b->filled == NCELLS;
 }
 
-static void possible_values(Point p, Board* b, bool possible[]) {
+static void possible_values(Point p, Board* b, int possible[], int* npossible) {
   Point sets[3][DIMENSION+1];
   int value;
-  int x_val;
-  int y_val;
+  Point check;
+  bool vector[DIMENSION+1];
 
   get_row(p, sets[0]);
   get_col(p, sets[1]);
@@ -147,67 +163,80 @@ static void possible_values(Point p, Board* b, bool possible[]) {
 
   // initialise possible
   for (int i=1; i<=DIMENSION; ++i) {
-    possible[i] = true;
+    vector[i] = true;
   }
 
+  // make bool vector
   for (int set=0; set<3; ++set) {
+
     for (int i=1; i<=DIMENSION; ++i) {
-      x_val = sets[set][i].x;
-      y_val = sets[set][i].y;
-      value = b->grid[x_val][y_val];
-      possible[value] = false;
+      check.x = sets[set][i].x;
+      check.y = sets[set][i].y;
+      value = get_board(check, b);
+      if (value != 0) {
+        vector[value] = false;
+      }
+    }
+  }
+
+  for (int i=1; i<=DIMENSION; ++i) {
+    if (vector[i]) {
+      possible[*npossible] = i;
+      ++(*npossible);
     }
   }
 }
-//
-// static void make_move(Board* b) {
-//   // update the board and track the change
-// }
-//
-// static void unmake_move(Board* b) {
-//   // undo the most recent change and reverse the tracking
-// }
-//
-// static void next_square(Board* b) {
-//   // return the next square to be considered
-//   // pick most constrained
-// }
-//
-// void backtrack(int partial[], int step, Board* board) {
-//   // int candidates[MCANDIDATES] = construct_candidates();
-//   int nc = 0;
-//
-//   if (is_complete(board)) {
-//     return;
-//   }
-//   
-//   step += 1;
-//   
-// }
+
+Point next_square_simple(Board* b) {
+  int value;
+  Point p;
+  // real simple, just pick the next available square
+  for (int y=1; y<=DIMENSION; ++y) {
+    for (int x=1; x<=DIMENSION; ++x) {
+      p = (Point){x,y};
+      value = get_board(p, b);
+      if (value == 0) {
+        return p;
+      }
+    }
+  }
+
+  printf("next_square couldn't find any emtpy! is the search already done?\n");
+  exit(EXIT_FAILURE);
+}
+
+void backtrack(Board* board, int* calls) {
+  ++(*calls);
+
+  if (is_complete(board)) {
+    return;
+  }
+
+  int candidates[MCANDIDATES+1]; 
+  int nc = 0;
+
+  Point next_point = next_square_simple(board);
+  possible_values(next_point, board, candidates, &nc);
+
+  for (int i=0; i<nc; ++i) {
+    make_move(next_point, board, candidates[i]);
+    backtrack(board, calls);
+    if (is_complete(board)) {
+      return;
+    }
+
+    unmake_move(next_point, board);
+  }
+}
 
 void example_backtrack(void) {
-  Point pnt = {9,1};
-
-  Point set[DIMENSION+1];
-  get_row(pnt, set);
-  get_col(pnt, set);
-  get_box(pnt, set);
-
-  for (int i=1; i<=DIMENSION; ++i) {
-    // printf("i: %d\t centre: %d\n", i, centre_val(i));
-    print_point(set[i]);
-    printf("\n");
-  }
+  int calls = 0;
 
   Board* b = init_board(INPUT_FILE);
+  print_board(b);
+
+  backtrack(b, &calls);
 
   print_board(b);
-  printf("board complete: %b\n", is_complete(b));
-
-  printf("current: %d\n", b->grid[pnt.x][pnt.y]);
-  bool possible[DIMENSION+1];
-  possible_values(pnt , b, possible);
-  for (int i=1; i<=DIMENSION; ++i) {
-    printf("i: %d, valid: %d\n", i, possible[i]);
-  }
+  printf("total backtrack calls: %d\n", calls);
 }

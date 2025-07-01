@@ -20,6 +20,7 @@ typedef struct {
 typedef struct {
   int grid[DIMENSION+1][DIMENSION+1];
   int filled;
+  int move_count;
   Point moves[NCELLS+1];
 } Board;
 
