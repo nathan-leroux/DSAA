@@ -1,0 +1,39 @@
+Dynamic Programming
+   
+   Dynamic Programming is a way to search through all possibilities while caching intermediate results to avoid recalculation.
+   It can be applied when a problem can be defined recursively and that definition recalculates the same sub-problems many times.
+   If the sub-problems are only calculated once, no performance is gained.
+   Intermediate results are stored using a results matrix
+   Generally applied on combinatorial problems with a 'left to right' ordering.
+
+
+   10.1 Caching vs Computation
+
+      Dynamic programming is essencially a tradeoff between space and time.
+      To implement, recursive calls are replaced with a datastructure lookup.
+      The arguments to the recursive call is the key/index for the datastructure.
+      After initial calculation, lookup of a value is obviously constant time.
+
+      When defining the problem recursively, it is important to specify the order of recursive statement evaluation.
+      Also when initialising the lookup matrix, consider what the base case of the recursive function would be.
+
+
+   10.2 Approximate String Matching
+
+      Great example of an application of dynamic programming.
+      Considers the 'cost' of how far apart two strings are.
+      What defines the cost can be application specific.
+      Changes that can be made to characters in the string are SUBSTITUTE, DELETE and INSERT.
+      each operation can have a differant defined cost
+
+      ### continue using string matching as an example for dp
+      ### 'how can this be defined recursively?' and then answer.
+
+
+
+
+
+
+
+
+
