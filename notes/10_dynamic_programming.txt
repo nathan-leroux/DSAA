@@ -7,12 +7,12 @@ Dynamic Programming
    Generally applied on combinatorial problems with a 'left to right' ordering.
 
 
-   10.1 Caching vs Computation
+   10.1 Caching v Computation
 
-      Dynamic programming is essencially a tradeoff between space and time.
-      To implement, recursive calls are replaced with a datastructure lookup.
-      The arguments to the recursive call is the key/index for the datastructure.
-      After initial calculation, lookup of a value is obviously constant time.
+      Dynamic programming is essentially a trade-off between memory usage and time.
+      To implement, recursive calls are replaced with a data structure lookup.
+      The arguments to the recursive call is the key/index for the data structure.
+      After initial calculation, lookup of a value is constant time.
 
       When defining the problem recursively, it is important to specify the order of recursive statement evaluation.
       Also when initialising the lookup matrix, consider what the base case of the recursive function would be.
@@ -24,16 +24,88 @@ Dynamic Programming
       Considers the 'cost' of how far apart two strings are.
       What defines the cost can be application specific.
       Changes that can be made to characters in the string are SUBSTITUTE, DELETE and INSERT.
-      each operation can have a differant defined cost
+      Each operation can have a different defined cost
 
-      ### continue using string matching as an example for dp
-      ### 'how can this be defined recursively?' and then answer.
+      10.2.1 Edit Distance by Recursion
+
+         First step in dynamic programming is defining the problem recursively
+         last character in the string must be either matched, subs added or deleted.
+         Therefore the problem can be solved by recursively evaluating the last character
+         Where D is the minimum difference, P is pattern and T is text, and i, j are the current index of each string respectively.
+         The problem is what is the cost for changing Pattern to Text
+         For a MATCH or SUBSTITUTE:
+            D[i-1, j-1] +1
+            Both indexes are incremented.
+         For an INSERTION:
+            D[i, j+1] +1
+            There is an extra character in the text, pattern is not incremented.
+         For a DELETION:
+            D[i+1, j] +1
+            There is an extra character in the pattern, text is not incremented.
+
+         Pseudo Code:
+         Check if length of either strings are zero
+         Recursive call for each option, evaluating best cost for each choice now.
+         Return lowest cost and series of operations.
+
+         Due to three exponential calls, this implementation is slow as shit.
 
 
+      10.2.2 Edit Distance by Dynamic Programming
+
+         Most important thing to pay attention to in the previous example is how many recursive calls are made with the same arguments?
+         Since there is only len(P) * len(S), not as many as the exponential run time.
+         In a P*S matrix, best cost and parent is stored.
+         When the matrix is initialised, the recursive base cases are stored.
+
+      10.2.3 Reconstructing The Path
+
+         Start at the end state, by following each cell's 'parent' field, the path can be reconstructed.
+         the parent field tells us what the operation was depending on where the next cell is.
+
+      10.2.4 Varieties of Edit Distance
+
+         Examples of other functions that can be performed with only minor changes are:
+
+         Substring matching
+            Finding where a short pattern best fits within a large body of text, even with misspellings
+            starting costs for different positions in text are set to 0, no penalty for different starting spots
+            end cell becomes len(S), (minimum cost at j)
+
+         Longest Common Subsequence
+            Longest scattered string of characters that still retain their pattern order
+            done by removing substitutions, only insertion/deletion to match
+
+         Maximum Monotone Subsequence
+            A numeric sequence is monotonically increasing if the ith element is at least as big as the (i-1)th
+            Seeks to delete the fewest characters in the text to leave a monotone subsequence
 
 
+   10.3 Longest Increasing Subsequence
 
+      Using this as another example to implement dynamic programming
+      (Identical to Maximum Monotone Subsequence)
 
+      The three generic steps are:
+         1. Formulate the answer as a recursive algorithm
+         2. Show that the parameters to your recurrence is bound by a (hopefully small) polynomial
+         3. Specify an evaluation order so partial results are always generated before you need them
 
+      The 'Longest Increasing Subsequence' is defined as how the text can be reduced so that each element is greater numerically to the last.
+      Only Deletion is used.
 
+      1. Formulate the answer as recursive
+         What information about partial solutions is important?
+         The length of the longest increasing subsequence up until each index in the partial 
+         Each additional character requires the value of each previous character and the longest subsequence that ends at that character.
+
+      2. Show that recurrence parameters are bound
+         recurrence parameters are bound by the length of the target text
+
+      3. Specify evaluation order
+         table values are calculated 0->n, so i-1 will be available when calculating i
+
+      In order to reconstruct the actual sequence (currently we only have the length)
+      we save the predecessor that the current extends.
+      This can be backtracked from the goal_cell to get the sequence
 
