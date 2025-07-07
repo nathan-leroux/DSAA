@@ -10,6 +10,7 @@
 #include "graph.h"
 #include "weighted_graph.h"
 #include "backtrack.h"
+#include "dynamic.h"
 
 int main(void) {
   // example_dynarray();
@@ -34,7 +35,9 @@ int main(void) {
   // printf("\n\n");
   // example_weighted_graph();
   // printf("\n\n");
-  example_backtrack();
+  // example_backtrack();
+  printf("\n\n");
+  example_dynamic();
 
   return 0;
 }
