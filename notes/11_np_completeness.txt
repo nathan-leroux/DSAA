@@ -1,0 +1,53 @@
+NP-Completeness
+
+   What is NP completeness?
+   NP-Completeness is a complexity classification of problems in theoretical computer science.
+   N stands for Non-deterministic, meaning it can be expressed as a function for a non-deterministic Turing machine
+   P stands for polynomial time (n^x, where x is any constant integer) which is considered a fast algorithm.
+
+   A problem is categorised as P if it can be solved and verified in polynomial time.
+   A problem is categorised as NP if it can be verified in polynomial time, but not solved (currently).
+   
+   A problem is classified as NP-Hard if it meets the following:
+      - It is at least as hard as NP problems 
+      - What this means is that all NP problems can be reduced to the problem
+   NP-Hard problems have a transitive property
+   Meaning that if you can reduce an NP-Hard problem to a new problem, it also means the new problem is NP-Hard
+
+   A problem is categorised as NP-Complete if it meets the following:
+      - It is a decision based problem, meaning it evaluates to 'yes' or 'no'
+      - It is an NP problem
+      - It is an NP-Hard problem
+      - All NP-Complete problems can be reduced to any other NP-Complete problems
+
+   The Study of NP completeness is useful as if a polynomial solution is found for any NP-Complete problem, it implies all NP problems are solvable.
+
+   For practical use, being unable to prove that a problem is NP-Hard indicates that a quick solution exists.
+   NP-Completeness also allows the properties that make a problem hard to be identified.
+
+
+   11.1 Problems and Reductions
+
+      A reduction is defined as an algorithm that convert one problem into another
+      If problem A is reducible to B and an efficient algorithm for B exists
+      Then B's algorithm could be used as a subroutine for solving A.
+      When this is true, problem A cannot be 'harder' than problem B
+
+      By being able to reduce one problem to another, you show that fundamentally the two problems are the same, just in different contexts
+      For NP-Complete problems one problem can be reduced to any other
+      Essentially a polynomial solution for one would be applicable to all classified NP-Complete
+
+      Terminology when describing reductions:
+         An instance of a problem is the set of inputs for which a literal solution exists.
+         A problem is the general question that describes all instances
+
+      The simplest class of problems to work with are decision problems (yes or no)
+      Most interesting decision problems can be rephrased as decision problems, NP-Complete theory is easier to apply in these cases.
+
+
+   11.4 Satisfiability
+
+      When proving problems are hard through reduction, they must be initially reduced through a certifiably hard problem
+      Satisfiability is a simple logic problem that is generally agreed to be hard
+      Given a set of boolean variables, a b c
+      determine whether
