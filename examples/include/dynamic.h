@@ -2,9 +2,10 @@
 #define DYNAMIC_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#define MAXSTRING 9
+#define MAXSTRING 10
 
 // indexes for options
 #define MATCH 0
