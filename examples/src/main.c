@@ -12,6 +12,7 @@
 #include "backtrack.h"
 #include "dynamic.h"
 #include "knapsack.h"
+#include "partition.h"
 
 int main(void) {
   // example_dynarray();
@@ -40,7 +41,8 @@ int main(void) {
   // printf("\n\n");
   // example_dynamic();
   // printf("\n\n");
-  example_knapsack();
+  // example_knapsack();
+  example_partition();
 
   return 0;
 }

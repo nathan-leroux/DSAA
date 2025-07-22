@@ -211,7 +211,7 @@ void my_print(char* array, int low, int high) {
   }
 }
 
-int partition(char* array, int low, int high) {
+static int partition(char* array, int low, int high) {
   int min_index = low;
   int p_index = low + (rand() % (high - low));
 
