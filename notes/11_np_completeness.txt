@@ -49,5 +49,42 @@ NP-Completeness
 
       When proving problems are hard through reduction, they must be initially reduced through a certifiably hard problem
       Satisfiability is a simple logic problem that is generally agreed to be hard
+      No worst case polynomial time algorithm exists
       Given a set of boolean variables, a b c
-      determine whether
+      And a set of clauses, { {a,b}, {!a, b, c}, {!b, !c} }
+      Determine if values for the boolean variables exist such that at least one variable in each clause evaluates to true
+      ( example would be a=true, b=true, c=false )
+
+
+      11.4.1 3-Satisfiability
+
+         3-Satisfiability is a sub-problem of satisfiability, where each clause contains three variables.
+         Three variables per clause is the smallest amount that turns the problem from polynomial to hard.
+         Any satisfiability problem can be reduced to a 3-sat by adding variables and clauses
+         Such that each clause only has 3 variables and the overall satisfiability of the instance is preserved.
+
+         3-sat is used in reductions to prove hardness of other problems due to its simplicity
+
+
+   11.9 P vs NP
+
+      The question is P=NP? is the most profound question in modern computer science theory
+      So its worth having some idea what it is about.
+
+
+      11.9.1 Verification vs Discovery
+
+         Is verification really an easier task than discovery?
+         Checking the correctness of most hard problems seems trivial and is often done in linear time
+         However, for these problems no lower bounds proof exists that proves faster algorithms are impossible
+         So there could still be a faster algorithm
+
+      11.9.2 The Classes P and NP
+
+         The main focus is the problems in P have a solution in polynomial time.
+         problems in NP do not, however can be verified in polynomial time.
+         P problems are also part of NP, as they can also be verified in polynomial time.
+
+         The big question is whether there is a class of NP problems that are not part of P, making P != NP
+         Otherwise P == NP
+         However there is no accepted proof for any problem NP not also part of P.
