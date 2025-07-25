@@ -1,0 +1,160 @@
+Dealing With Hard Problems
+
+   For creating practical solutions to hard problems there are still three solutions
+
+   Heuristics
+      - Fast algorithms that sometimes get it perfect
+
+   Approximation Algorithms
+      - Consistently get a good 'solution'
+
+   Algorithms Fast In the average case
+      - right answer but its possible to get slow inputs.
+      - Backtracking with pruning is a good example
+
+   12.1 Approximation Algorithms
+
+      Approximation algorithms provide a fast method for getting a 'good' answer.
+      This good answer is provably bound to the optimal answer.
+      However it is often unknown whether you will get a better/worse result than a heuristic that makes no guarantees.
+      Often is feasible to run both the Approximation Algorithm and the Heuristic and pick the best result.
+
+
+   12.2 Approximating Vertex Cover
+
+      A decent approximation for vertex cover involves the following:
+      - pick a random edge
+      - add both of the connected vertices to the cover
+      - remove all other connected edges (they're already covered)
+
+   This approximation will always produce a cover that is at most twice the size of the optimal cover.
+   And will be fast.
+
+   From this three points are raised
+      Simple does not mean stupid, more complex heuristics have longer worst case scenarios.
+      Greedy heuristics arn't always the answer
+      Post step clean-ups are a good idea
+
+
+      12.2.1 A Randomized Vertex Heuristic Cover
+
+         Last example was good but its excessive to pick both vertices to satisfy one edge.
+         What if instead we picked either one at random, 50/50.
+         We will still get at most twice the optimal result
+         However would have to be extremely unlucky 0.5*n to get the worst case.
+
+
+   12.4 When Average Is Good Enough
+
+      For certain optimisation problems, most solutions are seemingly close to the best possible.
+
+      12.4.1 Maximum k-sat
+
+         A more general problem that 3-Satisfiability
+         Maximum K-sat is finding the boolean assignment that satisfies the most clauses
+         If you were to pick the assignments randomly, you would likely satisfy +80% of them.
+
+
+   12.6 Heuristic Search Methods
+
+      Solving any hard problem is doomed to be too slow when large enough.
+      Heuristics for combinatorial optimisation problems give alternatives that will complete in time.
+      Three discussed methods are
+      - random sampling
+      - gradient descent search
+      - simulated annealing
+
+      All three of the heuristics share two similar components
+
+      Solution Candidate Representation:
+         A complete but concise description of all the possible solutions to the problem.
+         A data structure to represent the solutions
+
+      Cost Function:
+         A way to value the quality of the solution, like lowest or highest cost
+         The value that is used to determine whether one solution is better than another
+
+
+      12.6.1 Random Sampling
+
+         Random sampling, also called the Monte Carlo method.
+         Involves constructing random solutions and evaluating the cost.
+         The heuristic stops whenever an acceptable solution is found or a time limit expires.
+         It is required that the elements selected are uniformly random
+
+         Random sampling does well when there is a large number of acceptable solutions.
+         Gives a (relatively) large chance of finding a good solution.
+         In the average instance, this will return quickly.
+         Finding prime numbers is a good example for random sampling
+
+         Also works well when there is low coherence in the sample space
+         Low coherence is when how good one solution is has little/no indication of how good surrounding solutions are.
+
+
+      12.6.2 Local Search
+
+         Local search picks an arbitrary solution to start
+         then picks a neighbouring solution that improves the cost
+         A neighbouring solution is found using a transition mechanism
+         A transition mechanism could be as simple as adding one item to the solution and removing another
+         Could vary on a problem basis
+         This process is repeated until a local maximum is reached.
+
+         Local Search is vulnerable to getting stuck at local maximums
+         Where in order to get to the global maximum the intermediate solutions must be lower, which local search will not do
+         For this reason local search does best when there is great coherence in the sample space.
+         Running local search with many different starting points kind of alleviates this problem.
+
+         Also works well when the cost of considering a local solution is less than a global one
+         The cost of valuing a global solution (with TCP) is done by adding all edges
+         Evaluating a new local solution only takes subtracting the removed items and adding new ones
+         If n is large and time to evaluate solutions is limited, considering local solutions is much more efficient.
+
+
+      12.6.3 Simulated Annealing
+
+         Simulated Annealing allows occasional jumps to worse solutions
+         Technique is modelled on the thermodynamics of cooling materials.
+         While the overall temperature is decreasing, the energy state of individual particles is randomly distributed around the mean.
+         The added component is a 'cooling schedule', which governs how likely a jump to a worse solution is as a function of time.
+         At the beginning of the search (hot) we are more likely to accept a jump.
+         This initial randomness allows the sample space to be widely explored.
+         As the search progresses (cool), much more likely to only look at local optimisations.
+
+         Main part of the pseudo is the 'acceptance criteria'
+         Accepts and good change and accepts bad changes when change formula > random number 
+
+         Majority of the improvement occurs quickly in the first few iterations.
+         In practice simulated annealing performs the best of the three due to incremental optimisation and not getting stuck at local maximums.
+
+
+   12.10 Quantum Computing
+
+      Quantum computers exploit the quantum mechanics of subatomic particles in order to allow asymptotically faster algorithms for some problems.
+      Don't have to understand why these laws work the way they do in order to use them
+
+      Consider a regular deterministic machine with bits labelled b1 - bn
+      The probability distribution  for each 2^b-1 possibilities is 0, with the exception of 1 for the actual values.
+      In a quantum computer, many of the bit possibilities has a non-zero chance until it is observed.
+      Manipulating the probability distribution of all N possibilities is where quantum computers get performance gains.
+
+      They can be (heavily) summarised by being able to do the following operations.
+      init_state(Q, n, D)
+         initialise n qubits on Q machine as per description D
+         doesn't specify probability of each possibility, that would be exponential.
+         smaller, general descriptions.
+
+      quantum_gate(Q, c)
+         change the probability distribution based on gate condition c
+         quantum gates are similar to regular logic gates AND OR XOR etc
+
+      jack(Q, c)
+         increase probability of all states described by condition c
+         done in constant time even tho all qubits are affected, main part of quantum voodoo
+
+      sample(Q)
+         get a state of the machine based on the probabilities
+         give value of n qubits, takes O(n) time
+         the state of all qubits collapses into discrete values due to quantum entanglement, and the state is destroyed
+
+      While quantum computers do not solve hard problems in polynomial time, they allow significant gains.
