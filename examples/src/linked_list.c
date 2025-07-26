@@ -93,25 +93,21 @@ void example_linked_list(void) {
   struct linked_list* list = list_init();
   char* string = "linked list";
 
-  printf("## Linked List example\n");
-  printf("##\n");
-  printf("## appending to array  (added to head so input is reversed)\n");
-  printf("##\n");
+  printf("## Linked List\n\n");
+  printf("Appending to array  (added to head so input is reversed)\n");
 
   for (int i = 0; i < strlen(string); ++i) {
     list_append(&list, string[i]);
     list_print(list);
   }
-  printf("##\n");
-  printf("## popping from head\n");
-  printf("##\n");
+  printf("\n");
+  printf("Popping from head\n");
 
   list_pop(&list, list);
   list_print(list);
 
-  printf("##\n");
-  printf("## popping from tail\n");
-  printf("##\n");
+  printf("\n");
+  printf("Popping from tail\n");
 
   list_pop(&list, list_tail(list));
   list_print(list);

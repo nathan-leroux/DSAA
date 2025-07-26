@@ -8,26 +8,24 @@ Graph* dijkstras(Graph* g, int start, int end) {
   int current;
   int dist[MAXV];
   Edge* prev[MAXV];
-  
-  for (int i=1; i<=g->nvertices; ++i) {
+
+  for (int i = 1; i <= g->nvertices; ++i) {
     dist[i] = MAXINT;
     prev[i] = NULL;
   }
 
   dist[start] = 0;
   enqueue(q, start);
-  
+
   while (!queue_is_empty(q)) {
     current = dequeue(q);
 
-    for (Edge* e=g->edges[current]; e!=NULL; e=e->next) {
+    for (Edge* e = g->edges[current]; e != NULL; e = e->next) {
       if (dist[e->y] == MAXINT) {
-        printf("\tnew node: %d\n", e->y);
         enqueue(q, e->y);
       }
 
-      if (dist[e->y] > dist[current]+e->weight) {
-        printf("%d:  new min  %d -> %d\n", e->y, dist[e->y], dist[current]+e->weight);
+      if (dist[e->y] > dist[current] + e->weight) {
         dist[e->y] = dist[current] + e->weight;
         prev[e->y] = e;
       }
@@ -35,9 +33,9 @@ Graph* dijkstras(Graph* g, int start, int end) {
   }
 
   current = end;
-  for (e=prev[current]; e!=NULL; e=prev[e->x]) {
+  for (e = prev[current]; e != NULL; e = prev[e->x]) {
     insert_edge(shortest_path, e->x, e->y, e->weight, false);
   }
-  
+
   return shortest_path;
 }

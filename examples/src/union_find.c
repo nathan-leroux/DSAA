@@ -3,7 +3,7 @@
 UnionFind* init_union_find(int set_size) {
   UnionFind* new_uf = malloc(sizeof(UnionFind));
 
-  for (int i=1; i<=set_size; ++i) {
+  for (int i = 1; i <= set_size; ++i) {
     new_uf->root[i] = i;
     new_uf->size[i] = 1;
   }
@@ -32,8 +32,7 @@ void merge_uf(UnionFind* uf, int x, int y) {
   if (uf->size[root_x] >= uf->size[root_y]) {
     uf->root[root_y] = root_x;
     uf->size[root_x] += uf->size[root_y];
-  }
-  else {
+  } else {
     uf->root[root_x] = root_y;
     uf->size[root_y] += uf->size[root_x];
   }
@@ -41,19 +40,19 @@ void merge_uf(UnionFind* uf, int x, int y) {
 
 void print_uf(UnionFind* uf) {
   printf("index: ");
-  for (int i=1; i<=uf->set_size; ++i) {
+  for (int i = 1; i <= uf->set_size; ++i) {
     printf("%d ", i);
   }
   printf("\n");
 
   printf("root:  ");
-  for (int i=1; i<=uf->set_size; ++i) {
+  for (int i = 1; i <= uf->set_size; ++i) {
     printf("%d ", uf->root[i]);
   }
   printf("\n");
 
   printf("size:  ");
-  for (int i=1; i<=uf->set_size; ++i) {
+  for (int i = 1; i <= uf->set_size; ++i) {
     printf("%d ", uf->size[i]);
   }
   printf("\n");

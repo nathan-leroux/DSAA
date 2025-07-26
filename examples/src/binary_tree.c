@@ -143,10 +143,8 @@ void example_binary_tree(void) {
   struct tree* btree = NULL;
   struct tree* selected;
 
-  printf("## Binary Tree example\n");
-  printf("##\n");
-  printf("## inserting values into binary tree\n");
-  printf("##\n");
+  printf("## Binary Tree example\n\n");
+  printf("Inserting values into binary tree\n");
 
   tree_insert(&btree, NULL, 5);
   tree_insert(&btree, NULL, 2);
@@ -156,17 +154,15 @@ void example_binary_tree(void) {
 
   tree_print(btree);
 
-  printf("##\n");
-  printf("## Deleting element 2\n");
-  printf("##\n");
+  printf("\n");
+  printf("Deleting element 2\n");
 
   selected = tree_search(btree, 2);
   tree_delete(&btree, selected);
 
   tree_print(btree);
 
-  printf("##\n");
-  printf("## Minimum\n");
-  printf("##\n");
+  printf("\n");
+  printf("Minimum\n");
   printf("min: %d\n", tree_minimum(btree)->value);
 }

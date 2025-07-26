@@ -35,7 +35,6 @@ void selection_sort(char* array) {
       }
     }
 
-    printf("min: %c\n", min_value);
     array[min_index] = array[i];
     array[i] = min_value;
   }
@@ -43,8 +42,6 @@ void selection_sort(char* array) {
 
 void insertion_sort(char* array) {
   for (int index = 0; index < strlen(array); ++index) {
-    printf("%s\n", array);
-
     for (int j = index; j > 0; --j) {
       if (array[j] < array[j - 1]) {
         swap(&array[j], &array[j - 1]);
@@ -240,23 +237,28 @@ void quick_sort(char* array, int low, int high) {
 }
 
 void example_sorting(void) {
+  char* initial_string = "the five boxing wizards jump quickly";
+  printf("## Sorting\n");
+  printf("Initial String:\t\t'%s'\n", initial_string);
+  printf("\n");
+
   char* selection_string = array_init("the five boxing wizards jump quickly");
   selection_sort(selection_string);
-  printf("sorted array: %s\n", selection_string);
+  printf("Selection Sort:\t\t'%s'\n", selection_string);
 
   char* insertion_string = array_init("the five boxing wizards jump quickly");
   insertion_sort(insertion_string);
-  printf("sorted array: %s\n", insertion_string);
+  printf("Insertion Sort:\t\t'%s'\n", insertion_string);
 
   char* merge_string = array_init("the five boxing wizards jump quickly");
   merge_sort(merge_string, 0, strlen(merge_string));
-  printf("sorted array: %s\n", merge_string);
+  printf("MergeSort:\t\t'%s'\n", merge_string);
 
   char* heap_string = array_init("the five boxing wizards jump quickly");
   heap_sort(heap_string);
-  printf("heap array: %s\n", heap_string);
+  printf("HeapSort:\t\t'%s'\n", heap_string);
   //
   char* quick_string = array_init("the five boxing wizards jump quickly");
   quick_sort(quick_string, 0, strlen(quick_string) - 1);
-  printf("quick array: %s\n", quick_string);
+  printf("QuickSort:\t\t'%s'\n", quick_string);
 }

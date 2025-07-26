@@ -115,7 +115,6 @@ Bitarray* bitarray_init(int size) {
     ++ints_required;
   }
 
-  printf("bytes req: %ld\n", ints_required * sizeof(int));
   new_array->size = size;
   new_array->array = calloc(sizeof(char), ints_required);
 
@@ -127,7 +126,7 @@ int bloom_add(Bitarray* array, int* rn, char* string) {
   int bucket;
   int new = 0;
 
-  printf("Adding: %s\n", string);
+  printf("adding: %s\n", string);
 
   for (int i = 0; i < K_SIZE; ++i) {
     bucket = hash(string, rn[i]);
@@ -154,19 +153,16 @@ int rabin_karp(char* string, char* substring) {
     printf("0 ");
   }
 
-  // printf("string: %s, sub: %s\n", string, substring);
-
+  printf("Substring indexes\n");
   for (int i = 1; i <= (strlen(string) - length); ++i) {
-    // printf("i: %d, new: %c, old: %c\n", i, string[i+length-1], last_char);
-
     hash = update_hash(hash, string[i + length - 1], last_char, length);
     last_char = string[i];
 
     if (hash == subhash && explicit_check(&string[i], substring)) {
-      printf("i: %d\n", i);
-      // return i;
+      printf("%d ", i);
     }
   }
+  printf("\n");
 
   printf("\n");
   return -1;
@@ -181,40 +177,40 @@ void example_hashing(void) {
     randoms[i] = 1117 + (rand() % 1283);
   }
 
-  printf("##\n");
-  printf("## Adding words to Bloom Filter\n");
-  printf("##\n");
+  printf("## Bloom Filter\n\n");
+  printf("Adding words to Bloom Filter\n");
   bloom_add(new, randoms, "this");
   bitarray_print(new);
+
   bloom_add(new, randoms, "is");
   bitarray_print(new);
+
   bloom_add(new, randoms, "a");
   bitarray_print(new);
+
   bloom_add(new, randoms, "word");
   bitarray_print(new);
 
-  printf("##\n");
-  printf("## Checking if \'word\' is in\n");
-  printf("##\n");
+  printf("\n");
+  printf("Checking if 'word' is in\n");
 
   if (bloom_add(new, randoms, "word") == 0) {
-    printf("word is in!\n");
+    printf("'word' is in!\n");
   }
 
-  printf("##\n");
-  printf("## Checking if \'notaword\' is in\n");
-  printf("##\n");
+  printf("\n");
+  printf("Checking if 'notaword' is in\n");
 
-  if (bloom_add(new, randoms, "notaword") == 0) {
-    printf("notaword is in!\n");
+  if (bloom_add(new, randoms, "notaword") != 0) {
+    printf("'notaword' is not in!\n");
   }
-  printf("##\n");
-  printf("## Rabin-Karp String Searching\n");
-  printf("##\n");
+  printf("\n");
+  printf("## Rabin-Karp String Searching\n\n");
 
   char* string = "dabcabcabcababcabbaabc";
   char* substring = "abc";
 
   printf("string: %s\nsubstring: %s\n", string, substring);
+  printf("\n");
   rabin_karp(string, substring);
 }

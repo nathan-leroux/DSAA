@@ -45,19 +45,16 @@ void example_stack(void) {
   Stack* stack = stack_init();
   char* string = "abc";
 
-  printf("## Stack example\n");
-  printf("##\n");
-  printf("## push to stack\n");
-  printf("##\n");
+  printf("## Stack\n\n");
+  printf("Push to stack\n");
 
   for (int i = 0; i < strlen(string); ++i) {
     printf("push: %c\n", string[i]);
     push(stack, string[i]);
   }
 
-  printf("##\n");
-  printf("## pop from stack\n");
-  printf("##\n");
+  printf("\n");
+  printf("Pop from stack\n");
 
   printf("pop: %c\n", pop(stack));
   printf("pop: %c\n", pop(stack));

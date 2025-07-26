@@ -6,21 +6,24 @@
 // linear time it is
 // add a discovered edge to the datastructure for consideration
 
-
-
 void example_weighted_graph(void) {
   Graph* g = init_graph(false);
   read_graph(W_GRAPH_FILE, g, true);
 
-  printf("\n## PRIMS\n");
+  printf("## Weighted Graphs\n");
+  printf("weighted graph for examples can be found pg248 in textbook\n\n");
+
+  printf("Prims algorithm for minimum spanning tree\n");
   Graph* prims_tree = prims(g, 1);
   print_graph(prims_tree);
 
-  printf("\n## KRUSKALS\n");
+  printf("\n");
+  printf("Kruskals algorithm for minimum spanning tree\n");
   Graph* kruskals_tree = kruskals(g);
   print_graph(kruskals_tree);
 
-  printf("\n## DIJKSTRAS\n");
+  printf("\n");
+  printf("Dijkstras algorithm for shortest path\n");
   Graph* dijkstras_path = dijkstras(g, 7, 2);
   print_graph(dijkstras_path);
 }

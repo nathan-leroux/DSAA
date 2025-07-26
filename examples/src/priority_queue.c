@@ -38,10 +38,8 @@ int pq_get_minimum(Pqueue* queue) {
 }
 
 void example_priority_queue(void) {
-  printf("## Priority Queue example\n");
-  printf("##\n");
-  printf("## inserting values into queue\n");
-  printf("##\n");
+  printf("## Priority Queue\n\n");
+  printf("Inserting values into queue\n");
   Pqueue* queue = pq_init();
 
   printf("insert: %d\n", 5);
@@ -57,9 +55,8 @@ void example_priority_queue(void) {
 
   tree_print(queue->data);
 
-  printf("##\n");
-  printf("## Retrieving in order\n");
-  printf("##\n");
+  printf("\n");
+  printf("Retrieving in order\n");
 
   printf("got: %d\n", pq_get_minimum(queue));
   printf("got: %d\n", pq_get_minimum(queue));

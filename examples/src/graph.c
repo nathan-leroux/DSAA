@@ -61,6 +61,8 @@ void insert_edge(Graph* g, int x, int y, int weight, bool directed) {
 void print_graph(Graph* g) {
   Edge* edge;
 
+  printf("Printing Graph\n");
+  printf("vertex: connected_vertex(weight)\n");
   for (int i = 1; i <= g->nvertices; ++i) {
     printf("%d: ", i);
     edge = g->edges[i];
@@ -168,7 +170,7 @@ enum Edge_t get_edge_type(int x, int y, Search* s) {
 EdgePQ* init_edge_pq(void) {
   EdgePQ* new_pq = malloc(sizeof(EdgePQ));
 
-  for (int i=0; i<MAXEDGE; ++i) {
+  for (int i = 0; i < MAXEDGE; ++i) {
     new_pq->edges[i] = NULL;
   }
   new_pq->nedges = 0;
@@ -176,7 +178,6 @@ EdgePQ* init_edge_pq(void) {
 
   return new_pq;
 }
-
 
 void add_edge(EdgePQ* pq, Edge* edge) {
   int added_index = pq->nedges;
@@ -199,15 +200,15 @@ Edge* min_edge(EdgePQ* pq) {
   Edge* result = pq->edges[pq->min_index];
 
   // reshuffle from that index
-  for (int i=pq->min_index; i<pq->nedges-1; ++i) {
-    pq->edges[i] = pq->edges[i+1];
-    pq->edges[i+1] = NULL;
+  for (int i = pq->min_index; i < pq->nedges - 1; ++i) {
+    pq->edges[i] = pq->edges[i + 1];
+    pq->edges[i + 1] = NULL;
   }
   --pq->nedges;
 
   // reset the minimum edge
   pq->min_index = -1;
-  for (int i=0; i<pq->nedges; ++i) {
+  for (int i = 0; i < pq->nedges; ++i) {
     if (pq->min_index == -1) {
       pq->min_index = i;
     }
@@ -238,10 +239,12 @@ void topo_sort(Graph* g, Search* s) {
   }
 }
 
-static void print_early(int n, Search* s) { printf("%d: discovered\n", n); }
+static void print_early(int n, Search* s) {
+  printf("%d: vertex discovered\n", n);
+}
 
 static void print_edge(int x, int y, Search* s) {
-  printf("\tedge: %d %d\n", x, y);
+  printf("\t%d-%d: edge discovered\n", x, y);
 }
 
 void breadth_first_search(Graph* g, Search* s, int start) {
@@ -312,22 +315,30 @@ int depth_first_search(Graph* g, Search* s, int node, int time) {
 }
 
 void example_graph(void) {
-  Graph* breadth_g = init_graph(false);
   Graph* topo_g = init_graph(true);
 
-  Search* breadth_s = init_search(&print_early, &pass, &print_edge);
   Search* topo_s = init_search(&pass, &topo_late, &topo_edge);
 
+  printf("## Unweighted Graphs\n");
+  printf("graph for BFS and DFS can be found pg214 in textbook\n");
+  printf("directed graph for topo sort can be found pg231\n\n");
+
   printf("Breadth First Search\n");
+  Graph* breadth_g = init_graph(false);
+  Search* breadth_s = init_search(&print_early, &pass, &print_edge);
   read_graph(GRAPH_FILE, breadth_g, false);
   breadth_first_search(breadth_g, breadth_s, 1);
-  print_graph(breadth_g);
-  print_search(breadth_s);
+
+  printf("\n");
+  printf("Depth First Search\n");
+  Graph* depth_g = init_graph(false);
+  Search* depth_s = init_search(&print_early, &pass, &print_edge);
+  read_graph(GRAPH_FILE, depth_g, false);
+  depth_first_search(depth_g, depth_s, 1, 0);
 
   printf("\n");
   printf("Topological Sort\n");
   read_graph(GRAPH_FILE, topo_g, false);
-  print_graph(topo_g);
   topo_sort(topo_g, topo_s);
   stack_print(topo_s->stack);
 }

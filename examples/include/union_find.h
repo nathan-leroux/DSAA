@@ -1,15 +1,14 @@
 #ifndef UNION_FIND_H
 #define UNION_FIND_H
 
-#include <stdlib.h>
 #include <stdio.h>
-
+#include <stdlib.h>
 
 #define SET_SIZE 20
 
 typedef struct {
-  int root[SET_SIZE+1];
-  int size[SET_SIZE+1];
+  int root[SET_SIZE + 1];
+  int size[SET_SIZE + 1];
   int set_size;
 } UnionFind;
 

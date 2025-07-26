@@ -85,10 +85,8 @@ void dict_delete(Dictionary* htable, struct bucket* selected) {
 void example_dictionary(void) {
   Dictionary* table = dict_init();
 
-  printf("## Dictionary example\n");
-  printf("##\n");
-  printf("## appending to table\n");
-  printf("##\n");
+  printf("## Dictionary\n\n");
+  printf("Appending to table\n");
 
   dict_insert(table, "one", 1);
   printf("insert- key: \"one\", value: 1\n");
@@ -97,19 +95,17 @@ void example_dictionary(void) {
   dict_insert(table, "three", 3);
   printf("insert- key: \"three\", value: 3\n");
 
-  printf("##\n");
-  printf("## searching dictionary\n");
-  printf("##\n");
+  printf("\n");
+  printf("Searching dictionary\n");
 
   struct bucket* selected = dict_search(table, "one");
   printf("key: %s, val: %d\n", selected->key, selected->value);
 
-  printf("##\n");
-  printf("## deleting from dictionary\n");
-  printf("##\n");
+  printf("\n");
+  printf("Deleting from dictionary\n");
 
   dict_delete(table, selected);
   if (dict_search(table, "one") == NULL) {
-    printf("search not found\n");
+    printf("searched for 'one', not found\n");
   }
 }

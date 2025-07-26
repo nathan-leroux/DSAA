@@ -86,19 +86,17 @@ void example_dynarray(void) {
   Dynarray* example_array = dynarray_init(2);
   char* string = "dynamic array";
 
-  printf("## Dynamic Array example\n");
-  printf("##\n");
-  printf("## appending to array\n");
-  printf("##\n");
+  printf("## Dynamic Array\n");
+  printf("\n");
+  printf("Appending to array\n");
 
   for (int i = 0; i < strlen(string); ++i) {
     dynarray_append(example_array, string[i]);
     dynarray_print(example_array);
   }
 
-  printf("##\n");
-  printf("## popping from array\n");
-  printf("##\n");
+  printf("\n");
+  printf("Popping from array\n");
   dynarray_print(example_array);
 
   for (int i = 0; i < 8; ++i) {
